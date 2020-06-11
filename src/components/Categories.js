@@ -1,0 +1,30 @@
+import React from 'react'
+import Category from './Category'
+import PropTypes from 'prop-types'
+//import {Link} from 'react-router-dom'
+
+function Categories(props) {
+    const categories = props.categories;
+    const categories_list = categories.categories;
+    console.log(categories)
+    console.log(categories_list)
+
+    if (props.loading === true) {
+        return <div> ... loading </div>
+    }
+    else if (categories) {
+        return ( 
+            <div>  
+                <center><p> There are a total of {categories.total_categories} categories</p></center>
+                <div className='cat-list'>{categories_list.map((category, index) => <Category category={category} key={index}/>)}</div>
+            </div>)
+    }
+    
+}
+
+Categories.propTypes = {
+    categories: PropTypes.object.isRequired
+}
+
+
+export default Categories
