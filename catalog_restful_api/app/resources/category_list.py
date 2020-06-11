@@ -20,7 +20,7 @@ class CategoryList(Resource):
         """
         try:
             offset = int(request.args.get('offset'))
-            limit = int(request.args.get('limit'))
+            limit = CategoryModel.count_rows() #Edit to show all categories
             results = CategoryModel.find_based_on_offset_and_limit(offset, limit)
         except Exception:
             raise InvalidUsage('Error occurred because of offset and limit parameters.', 500)
@@ -31,8 +31,7 @@ class CategoryList(Resource):
         return obj, 200
 
     @staticmethod
-    @jwt_required()
-    def post(user):
+    def post():
         """
         Add new category to the database
         :return: data of new category being added
