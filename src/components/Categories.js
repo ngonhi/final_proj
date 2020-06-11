@@ -1,7 +1,7 @@
 import React from 'react'
 import Category from './Category'
 import PropTypes from 'prop-types'
-//import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 function Categories(props) {
     const categories = props.categories;
@@ -14,7 +14,8 @@ function Categories(props) {
     }
     else if (categories) {
         return ( 
-            <div>  
+            <div>
+                <Link className='add-icon' to='/AddCategory'></Link>
                 <center><p> There are a total of {categories.total_categories} categories</p></center>
                 <div className='cat-list'>{categories_list.map((category, index) => <Category category={category} key={index}/>)}</div>
             </div>)

@@ -16,6 +16,15 @@ h1 {
   text-align: center;
 }
 
+h1 a {
+  color: black;
+  text-decoration: none;
+}
+
+h1 a:hover {
+  color: grey;
+}
+
 .cat-list {
   display: flex;
   max-width: 1000px;
@@ -26,4 +35,50 @@ h1 {
   width: calc(100% + 4rem);
   margin-left: 2rem;
   margin-top: 2rem;
+}
+
+.add-icon {
+  background: url("https://image.flaticon.com/icons/svg/60/60740.svg") center no-repeat;
+  background-size: contain;
+  padding: 40px;
+  display: table;
+  margin: 20px auto;
+  border: none;
+}
+  
+.form {
+  width: 360px;
+  padding: 0 0 0;
+  margin: auto;
+}
+  
+.form input {
+  font-family: sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+  
+.form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background:#065784;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+  
+.form button:hover,.form button:active,.form button:focus {
+  background: #7B8589;
 }
