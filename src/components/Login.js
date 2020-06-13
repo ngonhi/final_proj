@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Redirect} from 'react-router-dom'
 
 class Login extends Component {
   constructor() {
@@ -7,6 +8,7 @@ class Login extends Component {
   }
 
   handleSubmit(event) {
+    console.log(this.props)
     event.preventDefault()
 
     const user = {
@@ -23,12 +25,13 @@ class Login extends Component {
       body: JSON.stringify(user)
     })
     .then(res => res.json())
-    .then(data => console.log(data)) // Access token
-    .catch(error => console.log(error))
-
-    // Insert users into state
-    this.props.history.push(`/Categories`)
-  }
+    .then(data => {
+      this.props.insertToken(data)
+      this.props.onHistory.push(`/Categories`)
+    })
+    .catch(error => console.log(error.message))
+}
+    
 
   render() {
     return (

@@ -26,11 +26,11 @@ class Register extends Component {
       body: JSON.stringify(newUser)
     })
     .then(res => res.json())
-    .then(data => console.log(data)) // Access token
-    .catch((error) => console.log(error.message)) // Error message. Use alert
-
-    // Insert users into state
-    this.props.history.push(`/Categories`)
+    .then(data => {
+      this.props.insertToken(data)
+      this.props.onHistory.push(`/Categories`)
+    })
+    .catch(error => console.log(error.message)) // Use alert
   }
 
   render() {
