@@ -1,11 +1,7 @@
 import React, {Component} from 'react'
 import {Route, Link} from 'react-router-dom'
-import Categories from './categories/Categories'
-import AddCategory from './categories/AddCategory'
-import Login from './user/Login'
-import Register from './user/Register'
-import User from './user/User'
-import Single from './categories/Single'
+import {AddCategory, Categories, Single} from './categories/index'
+import {User, Login, Register} from './user/index'
 
 class Main extends Component {
   state = {
@@ -41,7 +37,7 @@ class Main extends Component {
           <AddCategory {...this.props}/>
         )}/>
 
-        <Route path='/Category/:id' render = {(params) =>// params include id and history
+        <Route path='/Category/:id' render = {(params) =>
           <Single loading={this.state.loading} {...this.props} {...params}/>
         }/>
       </div>
