@@ -1,11 +1,22 @@
 import React, { Component } from 'react'
-import {Redirect} from 'react-router-dom'
+import Popup from './Popup'
 
 class Login extends Component {
+  state = {
+    seen: false
+  };
+  
   constructor() {
     super()
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.togglePop = this.togglePop.bind(this)
   }
+
+  togglePop = () => {
+    this.setState({
+      seen: !this.state.seen
+    });
+  };
 
   handleSubmit(event) {
     console.log(this.props)
@@ -26,10 +37,17 @@ class Login extends Component {
     })
     .then(res => res.json())
     .then(data => {
-      this.props.insertToken(data)
-      this.props.onHistory.push(`/Categories`)
+      if ('access_token' in data) {
+        this.props.insertToken(data)
+        this.props.onHistory.push(`/Categories`) 
+      } else {
+        console.log(data);
+        this.props.onHistory.push(`/Login`);
+        //return <div> {data.message} </div>;
+        //return <Popup message={data.message} onHistory={this.props.onHistory} toggle={this.togglePop}/>
+      }
     })
-    .catch(error => console.log(error.message))
+    .catch(error => console.log(error))
 }
     
 

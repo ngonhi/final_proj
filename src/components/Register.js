@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Popup from './Popup'
 
 class Register extends Component {
   constructor() {
@@ -27,10 +28,21 @@ class Register extends Component {
     })
     .then(res => res.json())
     .then(data => {
-      this.props.insertToken(data)
-      this.props.onHistory.push(`/Categories`)
+      if ('access_token' in data) {
+        this.props.insertToken(data)
+        this.props.onHistory.push(`/Categories`) 
+      } else {
+        console.log(data);
+        this.props.onHistory.push(`/Register`);
+        //return <div> {data.message} </div>;
+        //return <Popup message={data.message} onHistory={this.props.onHistory} toggle={this.togglePop}/>
+      }
     })
-    .catch(error => console.log(error.message)) // Use alert
+    .catch(error => {
+      console.log(error.message)
+      Popup.alert(error.message)
+      this.props.onHistory.push(`/Register`)
+    }) // Use alert
   }
 
   render() {
