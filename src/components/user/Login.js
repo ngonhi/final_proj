@@ -18,7 +18,6 @@ class Login extends Component {
   };
 
   handleSubmit(event) {
-    console.log(this.props)
     event.preventDefault()
 
     const user = {

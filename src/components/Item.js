@@ -1,9 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+//import PropTypes from 'prop-types'
 //import {Link} from 'react-router-dom'
 
 function Item(props) {
-    console.log('Item');
     return (
     <div>hello</div>
     )

@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import Category from './Category'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
-import Logout from './Logout'
+import Logout from '../user/Logout'
 
 class Categories extends Component {
     constructor() {

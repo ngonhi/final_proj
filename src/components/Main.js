@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import {Route, Link} from 'react-router-dom'
-import Categories from './Categories'
-import AddCategory from './AddCategory'
-import Login from './Login'
-import Register from './Register'
-import User from './User'
-import Single from './Single'
+import Categories from './categories/Categories'
+import AddCategory from './categories/AddCategory'
+import Login from './user/Login'
+import Register from './user/Register'
+import User from './user/User'
+import Single from './categories/Single'
 
 class Main extends Component {
   state = {

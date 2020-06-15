@@ -1,7 +1,7 @@
 import React from 'react'
 import Category from './Category'
-import Item from './Item'
-import Logout from './Logout'
+import Item from '../Item'
+import Logout from '../user/Logout'
 
 function Single(props) {
     const {match, categories} = props
