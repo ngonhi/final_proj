@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Popup from './Popup'
 
 class Login extends Component {
   state = {
@@ -27,7 +26,7 @@ class Login extends Component {
         "password": event.target.elements.password.value
     }
 
-    this.props.startLoadingToken(user, 'login', `/Login`, this.props.history)
+    this.props.startLoadingToken(user, 'login', `/Login`, this.props)
 }
     
 

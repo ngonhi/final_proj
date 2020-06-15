@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Popup from './Popup'
 
 class Register extends Component {
   constructor() {

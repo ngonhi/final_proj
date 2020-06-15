@@ -5,9 +5,8 @@ import * as actions from '../redux/actions'
 import {withRouter} from 'react-router'
 
 function mapStateToProps(state) {
-    console.log(state)
     return {
-        categories: state.categories, // Right now state is categories
+        categories: state.categories,
         //items: state.items
         access_token: state.access_token
     }

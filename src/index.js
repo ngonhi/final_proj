@@ -20,7 +20,30 @@ const enhancer = composeEnhancers(
   applyMiddleware(thunk),
   // other store enhancers if any
 );
-const store = createStore(rootReducer, enhancer);
+
+const saveToLocalStorage = (state) => {
+  try {
+      const serializedState = JSON.stringify(state);
+      localStorage.setItem('state', serializedState);
+  } catch (error) {
+      console.log(error);
+  }
+};
+
+const loadFromLocalStorage = (state) => {
+  try {
+      const serializedState = localStorage.getItem('state');
+      if (serializedState == null) return undefined;
+      return JSON.parse(serializedState);
+  } catch (error) {
+      return undefined;
+  }
+};
+
+const persistedState = loadFromLocalStorage()//localStorage.getItem('access_token') //? JSON.parse(localStorage.getItem('access_token')) : '';
+const store = createStore(rootReducer, persistedState, enhancer);
+
+store.subscribe(() => saveToLocalStorage(store.getState()));
 
 ReactDOM.render(
   <Provider store={store}><BrowserRouter>

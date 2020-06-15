@@ -14,22 +14,19 @@ class Main extends Component {
 
   constructor() {
     super()
-    this.insertToken = this.insertToken.bind(this)
-  }
-  // Load all categories.
-  // How to update limit. In API?
-  componentDidMount() {
-    this.props.startLoadingCats()
-    .then(() => this.setState({loading: false}))
-    console.log('mounted')
+    this.loadToken = this.loadToken.bind(this)
   }
 
-  insertToken(token) {
+  loadToken(token) {
     this.setState({access_token: token})
   }
 
+  componentDidMount() {
+    this.props.startLoadingCats()
+    .then(() => this.setState({loading: false}))
+  }
+
   render () {
-    console.log(this.props)
     return (
       <div>
         <h1> <Link to='/'> Categories Catalog </Link> </h1>
@@ -46,8 +43,8 @@ class Main extends Component {
           <Categories loading={this.state.loading} categories={this.props.categories}/> 
         )}/>
 
-        <Route path='/AddCategory' render = {({history}) => (
-          <AddCategory onHistory={history}/>
+        <Route path='/AddCategory' render = {() => (
+          <AddCategory {...this.props}/>
         )}/>
 
         <Route path='/Category/:id' render = {(params) =>// params include id and history

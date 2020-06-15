@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux'
 
-function categories(state={}, action) { // where did they get action?
-    // action is what returns by functions 
+function categories(state={}, action) {
     switch (action.type) {
         case 'ADD_CATEGORY':
-            return [...state, action.cat]
+            return {'total_categories': state['total_categories'] + 1, 
+                    'categories': [...state['categories'], action.cat]} 
         case 'LOAD_CATEGORIES':
             return action.cats
         default:

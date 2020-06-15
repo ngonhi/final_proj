@@ -1,5 +1,6 @@
 import React from 'react'
 import Category from './Category'
+import Item from './Item'
 
 function Single(props) {
     console.log(props)
@@ -20,6 +21,7 @@ function Single(props) {
     } else if (category) {
         return <div>
              <center><Category category={category} key={id}/></center>
+             <Item/>
         </div>
     } else {
         return <h1> No Post Found </h1>

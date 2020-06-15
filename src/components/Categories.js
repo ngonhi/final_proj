@@ -6,7 +6,6 @@ import {Link} from 'react-router-dom'
 function Categories(props) {
     const categories = props.categories;
     const categories_list = categories.categories;
-    const items = props.items
     
     if (props.loading === true) {
         return <div> ... loading </div>
