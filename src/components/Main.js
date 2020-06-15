@@ -9,8 +9,7 @@ import Single from './Single'
 
 class Main extends Component {
   state = {
-    loading: true, 
-    access_token: ''
+    loading: true
   }
 
   constructor() {
@@ -30,6 +29,7 @@ class Main extends Component {
   }
 
   render () {
+    console.log(this.props)
     return (
       <div>
         <h1> <Link to='/'> Categories Catalog </Link> </h1>
@@ -37,10 +37,10 @@ class Main extends Component {
         <Route exact path="/" component={User}/>
         
         <Route path='/Register' render={({history}) => 
-          <Register access_token={this.state.access_token} insertToken={this.insertToken} onHistory={history}/>}/>
+          <Register {...this.props} onHistory={history} insertToken={this.insertToken}/>}/>
 
         <Route path='/Login' render={({history}) => 
-          <Login access_token={this.state.access_token} insertToken={this.insertToken} onHistory={history}/>}/>
+          <Login {...this.props} onHistory={history} insertToken={this.insertToken}/>}/>
 
         <Route path='/Categories' render={() => (
           <Categories loading={this.state.loading} categories={this.props.categories}/> 

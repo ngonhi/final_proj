@@ -18,7 +18,10 @@ class Register extends Component {
     }
 
     console.log(newUser)
-    fetch("http://127.0.0.1:5000/registrations", {
+    //this.props.startLoadingToken(newUser, 'registrations')
+    const type = "registrations"
+    const url = "http://127.0.0.1:5000/" + type
+    fetch(url, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -38,11 +41,7 @@ class Register extends Component {
         //return <Popup message={data.message} onHistory={this.props.onHistory} toggle={this.togglePop}/>
       }
     })
-    .catch(error => {
-      console.log(error.message)
-      Popup.alert(error.message)
-      this.props.onHistory.push(`/Register`)
-    }) // Use alert
+    .catch(error => console.log(error))
   }
 
   render() {

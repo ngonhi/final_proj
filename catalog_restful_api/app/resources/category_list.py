@@ -31,7 +31,8 @@ class CategoryList(Resource):
         return obj, 200
 
     @staticmethod
-    def post():
+    @jwt_required()
+    def post(user):
         """
         Add new category to the database
         :return: data of new category being added
