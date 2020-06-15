@@ -12,21 +12,14 @@ class Main extends Component {
     loading: true
   }
 
-  constructor() {
-    super()
-    this.loadToken = this.loadToken.bind(this)
-  }
-
-  loadToken(token) {
-    this.setState({access_token: token})
-  }
-
   componentDidMount() {
     this.props.startLoadingCats()
     .then(() => this.setState({loading: false}))
   }
 
   render () {
+    console.log(this.state)
+    console.log(this.props)
     return (
       <div>
         <h1> <Link to='/'> Categories Catalog </Link> </h1>
@@ -40,7 +33,8 @@ class Main extends Component {
           <Login {...this.props}/>}/>
 
         <Route path='/Categories' render={() => (
-          <Categories loading={this.state.loading} categories={this.props.categories}/> 
+          <Categories loading={this.state.loading} categories={this.props.categories} 
+                      access_token={this.props.access_token} history={this.props.history}/> 
         )}/>
 
         <Route path='/AddCategory' render = {() => (
@@ -50,7 +44,6 @@ class Main extends Component {
         <Route path='/Category/:id' render = {(params) =>// params include id and history
           <Single loading={this.state.loading} {...this.props} {...params}/>
         }/>
-
       </div>
     )
     }

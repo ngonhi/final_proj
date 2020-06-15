@@ -18,24 +18,27 @@ class AddCategory extends Component {
 
         if (name && description) {
             this.props.startAddingCat(category, this.props.access_token)
-            this.props.history.push('/Categories')
+            this.props.history.push(`/Categories`)
         }
     }
 
     render() {
-        return (
-        <div>
-            <Logout/>
-            <div className='form'>
-                <form onSubmit={this.handleSubmit}> 
-                    <input type='text' placeholder='Name' name='name'></input>
-                    <input type='text' placeholder='Description' name='des'></input>
-                    <button> Insert </button>
-                </form>
-            </div>
-            
-        </div>
-        )
+        if (this.props.access_token) {
+            return (
+            <div>
+                <Logout/>
+                <div className='form'>
+                    <form onSubmit={this.handleSubmit}> 
+                        <input type='text' placeholder='Name' name='name'></input>
+                        <input type='text' placeholder='Description' name='des'></input>
+                        <button> Insert </button>
+                    </form>
+                </div>
+                
+            </div>)
+        } else {
+            return <div className='loader'> Access denied </div>
+        }
     }
 }
 

@@ -4,15 +4,18 @@ import Item from './Item'
 import Logout from './Logout'
 
 function Single(props) {
-    console.log(props)
-    
     const {match, categories} = props
     const id = Number(match.params.id)
     
+    if (!props.access_token) {
+        return <div className='loader'> Access denied </div>
+    }
+
     var categories_list = []
     if (props.loading === false) {
         categories_list = categories.categories
     }
+
     const category = categories_list.find((cat) => cat.id === id)
 
     if (props.loading === true) {
