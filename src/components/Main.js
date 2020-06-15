@@ -36,11 +36,11 @@ class Main extends Component {
 
         <Route exact path="/" component={User}/>
         
-        <Route path='/Register' render={({history}) => 
-          <Register {...this.props} onHistory={history} insertToken={this.insertToken}/>}/>
+        <Route path='/Register' render={() => 
+          <Register {...this.props}/>}/>
 
-        <Route path='/Login' render={({history}) => 
-          <Login {...this.props} onHistory={history} insertToken={this.insertToken}/>}/>
+        <Route path='/Login' render={() => 
+          <Login {...this.props}/>}/>
 
         <Route path='/Categories' render={() => (
           <Categories loading={this.state.loading} categories={this.props.categories}/> 

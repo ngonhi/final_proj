@@ -1,5 +1,5 @@
 
-export function startLoadingToken(user, loadType, errorPushType) {
+export function startLoadingToken(user, loadType, errorPushType, history) {
     return (dispatch) => {  
         const url = "http://127.0.0.1:5000/" + loadType
         fetch(url, {
@@ -13,13 +13,13 @@ export function startLoadingToken(user, loadType, errorPushType) {
         .then(res => res.json())
         .then(data => {
             if ('access_token' in data) {
-                dispatch(loadToken(data))
-                this.props.onHistory.push(`/Categories`) 
+                dispatch(loadToken(data['access_token']))
+                history.push(`/Categories`) 
             } else {
                 console.log(data);
-                this.props.onHistory.push(`/Login`);
+                history.push(errorPushType);
                 //return <div> {data.message} </div>;
-                //return <Popup message={data.message} onHistory={this.props.onHistory} toggle={this.togglePop}/>
+                //<Popup message={data.message} onHistory={this.props.onHistory} toggle={this.togglePop}/>
             }
         })
         .catch(error => console.log(error))

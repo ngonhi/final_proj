@@ -27,27 +27,7 @@ class Login extends Component {
         "password": event.target.elements.password.value
     }
 
-    fetch("http://127.0.0.1:5000/login", {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-        },
-      body: JSON.stringify(user)
-    })
-    .then(res => res.json())
-    .then(data => {
-      if ('access_token' in data) {
-        this.props.insertToken(data)
-        this.props.onHistory.push(`/Categories`) 
-      } else {
-        console.log(data);
-        this.props.onHistory.push(`/Login`);
-        //return <div> {data.message} </div>;
-        //return <Popup message={data.message} onHistory={this.props.onHistory} toggle={this.togglePop}/>
-      }
-    })
-    .catch(error => console.log(error))
+    this.props.startLoadingToken(user, 'login', `/Login`, this.props.history)
 }
     
 

@@ -1,3 +1,5 @@
+import {combineReducers} from 'redux'
+
 function categories(state={}, action) { // where did they get action?
     // action is what returns by functions 
     switch (action.type) {
@@ -13,10 +15,12 @@ function categories(state={}, action) { // where did they get action?
 function access_token(state='', action) {
     switch(action.type) {
         case 'LOAD_TOKEN':
-            return action.access_token
+            return action.token
         default:
             return state
     }
 }
 
-export default categories
+const rootReducer = combineReducers({categories, access_token})
+
+export default rootReducer
