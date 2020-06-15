@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import Logout from './Logout'
 
 class AddCategory extends Component {
     constructor() {
@@ -24,6 +25,7 @@ class AddCategory extends Component {
     render() {
         return (
         <div>
+            <Logout/>
             <div className='form'>
                 <form onSubmit={this.handleSubmit}> 
                     <input type='text' placeholder='Name' name='name'></input>

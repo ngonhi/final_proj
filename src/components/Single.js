@@ -1,6 +1,7 @@
 import React from 'react'
 import Category from './Category'
 import Item from './Item'
+import Logout from './Logout'
 
 function Single(props) {
     console.log(props)
@@ -20,6 +21,7 @@ function Single(props) {
         </div>     
     } else if (category) {
         return <div>
+            <Logout/>
              <center><Category category={category} key={id}/></center>
              <Item/>
         </div>
