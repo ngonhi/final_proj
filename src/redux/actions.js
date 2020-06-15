@@ -1,4 +1,4 @@
-
+// Action for Token
 export function startLoadingToken(user, loadType, errorPushType, props) {
     return (dispatch) => {  
         const url = "http://127.0.0.1:5000/" + loadType
@@ -14,12 +14,17 @@ export function startLoadingToken(user, loadType, errorPushType, props) {
         .then(data => {
             if ('access_token' in data) {
                 dispatch(loadToken(data['access_token']))
+                dispatch(loadError([]))
                 props.history.push(`/Categories`) 
             } else {
-                console.log(data);
+                console.log(Object.values(data['message']));
+                if (loadType == 'registrations') {
+                    const error = Object.values(data['message'])
+                    dispatch(loadError(error))
+                } else if (loadType == 'login') {
+                    dispatch(loadError([data['message']]))
+                } 
                 props.history.push(errorPushType);
-                //return <div> {data.message} </div>;
-                //<Popup message={data.message} onHistory={this.props.onHistory} toggle={this.togglePop}/>
             }
         })
         .catch(error => console.log(error))
@@ -35,6 +40,7 @@ export function loadToken(token) {
 }
 
 
+// Actions for Categories
 export function startLoadingCats() {
     return (dispatch) => {
         return fetch("http://127.0.0.1:5000/categories?offset=0")
@@ -74,5 +80,17 @@ export function loadCats(cats) {
     return {
         type: 'LOAD_CATEGORIES',
         cats
+    }
+}
+
+
+// Actions for Items
+
+
+// Actions for Error
+export function loadError(error) {
+    return {
+        type: 'LOAD_ERROR',
+        error
     }
 }

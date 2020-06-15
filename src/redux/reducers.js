@@ -21,6 +21,15 @@ function access_token(state='', action) {
     }
 }
 
-const rootReducer = combineReducers({categories, access_token})
+function error(state=[], action) {
+    switch(action.type) {
+        case 'LOAD_ERROR':
+            return action.error
+        default:
+            return state
+    }
+}
+
+const rootReducer = combineReducers({categories, access_token, error})
 
 export default rootReducer

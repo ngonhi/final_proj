@@ -8,7 +8,8 @@ function mapStateToProps(state) {
     return {
         categories: state.categories,
         //items: state.items
-        access_token: state.access_token
+        access_token: state.access_token,
+        error: state.error
     }
 }
 

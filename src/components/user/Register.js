@@ -16,11 +16,12 @@ class Register extends Component {
         "name": event.target.elements.name.value
     }
 
-    this.props.startLoadingToken(newUser, 'registrations', `/Register`, this.props.history)
+    this.props.startLoadingToken(newUser, 'registrations', `/Register`, this.props)
   }
 
   render() {
     return (
+      <div>
         <div className='form'>
                 <form onSubmit={this.handleSubmit}> 
                     <input type='text' placeholder='username' name='username'></input>
@@ -29,7 +30,10 @@ class Register extends Component {
                     <input type='text' placeholder='password' name='password'></input>
                     <button> Register </button>
                 </form>
-            </div>
+        </div>
+        <div> {this.props.error ? this.props.error.map((value, index) =>
+          {return <center><li key={index}>{value}</li></center> }) : null} </div>
+      </div>
     )
   }
 }
