@@ -21,10 +21,9 @@ describe('<User />', () => {
         const wrapper = shallow(<User />)
         expect(toJson(wrapper)).toMatchSnapshot()
     })
-    // it('should contain link to register', () => {
-    //   const wrapper = shallow(<MemoryRouter><User /></MemoryRouter>);
-    //   const second_wrapper = wrapper.find('button-container')
-    //   console.log(wrapper.html())
-    //   expect(wrapper.find('a').props().to).toBe('/Register');
-    // })
+    it('link should render correctly', () => {
+      const wrapper = shallow(<User/>)
+      expect(wrapper.find(Link).at(0).props().to).toBe('/Register')
+      expect(wrapper.find(Link).at(1).props().to).toBe('/Login')
+    })
   })
