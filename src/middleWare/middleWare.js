@@ -10,3 +10,5 @@ const composeEnhancers =
 export const enhancer = composeEnhancers(
   applyMiddleware(thunk)
 );
+
+//https://medium.com/netscape/creating-custom-middleware-in-react-redux-961570459ecb#.9cu40l9hy

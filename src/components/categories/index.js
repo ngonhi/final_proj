@@ -1,6 +1,6 @@
 import AddCategory from './AddCategory'
-import Categories from './Categories'
 import Category from './Category'
+import Categories from './Categories'
 import SingleCat from './SingleCat'
 
-export {AddCategory, Categories, Category, SingleCat}
+export {AddCategory, Category, Categories, SingleCat}

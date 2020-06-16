@@ -2,10 +2,11 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {Category} from './index'
-import {Logout} from '../user/index'
+import {Logout} from '../User/index'
 
 class Categories extends Component {
     render() {
+        console.log('Categories')
         const access_token = this.props.access_token
         const categories = this.props.categories
         const categories_list = categories.categories

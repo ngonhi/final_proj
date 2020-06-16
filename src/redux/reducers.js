@@ -1,4 +1,4 @@
-import {combineReducers, bindActionCreators} from 'redux'
+import {combineReducers} from 'redux'
 
 function categories(state={}, action) {
     switch (action.type) {

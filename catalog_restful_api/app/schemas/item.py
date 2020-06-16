@@ -20,3 +20,4 @@ class ItemSchema(Schema):
     created = fields.DateTime()
     updated = fields.DateTime()
     user_id = fields.Integer()
+    category_id = fields.Integer()

@@ -1,20 +1,21 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Item} from './index'
-import {Logout} from '../user/index'
+import {Logout} from '../User/index'
 
 class Items extends Component {
     render() {
+        console.log('Items')
+        console.log(this.props)
         const access_token = this.props.access_token
         const items = this.props.items
         const items_list = items.items
-        console.log(items_list)
         
         if(!access_token) {
             return <div className='loader'> Access denied </div>
         }
 
-        else if (this.props.loading === true) {
+        else if (this.props.item_loading === true) {
             return <div className='loader'> ... loading </div>
         }
 

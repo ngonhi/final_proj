@@ -1,20 +1,17 @@
 import React, {Component} from 'react'
 import Category from './Category'
-import Items from '../items/Items' // Need to change to index
-import Logout from '../user/Logout'
+import Items from '../Items/Items' // Need to change to index
+import Logout from '../User/Logout'
 
 class SingleCat extends Component {
-    state = {
-        item_loading: true
-      }
-
     componentDidMount() {
         const cat_id = Number(this.props.match.params.id)
-        this.props.startLoadingItems(cat_id)
-        .then(() => this.setState({item_loading: false}))
+        this.props.setCatId(cat_id)
     }
 
     render() {
+        console.log('SingleCat')
+        console.log(this.props)
         const {match, categories} = this.props
         const id = Number(match.params.id)
         
@@ -29,18 +26,18 @@ class SingleCat extends Component {
 
         const category = categories_list.find((cat) => cat.id === id)
 
-        if (this.props.loading === true) {
+        if (this.props.loading === true || this.props.item_loading === true) {
             return <div className='loader'>
                 ...loading
             </div>     
         } else if (category) {
             return <div>
                 <Logout/>
-                <center><Category category={category} key={id}/></center>
-                <Items {...this.props} loading={this.state.item_loading}/>
+                <center><Category category={category}/></center>
+                <Items {...this.props} item_loading={this.props.item_loading}/>
             </div>
         } else {
-            return <h1> No Post Found </h1>
+            return <h1> No Category Found </h1>
         }
     }
 }
