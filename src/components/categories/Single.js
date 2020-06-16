@@ -1,35 +1,50 @@
-import React from 'react'
+import React, {Component} from 'react'
 import Category from './Category'
-import Item from '../Item'
+import Items from '../items/Items'
 import Logout from '../user/Logout'
 
-function Single(props) {
-    const {match, categories} = props
-    const id = Number(match.params.id)
-    
-    if (!props.access_token) {
-        return <div className='loader'> Access denied </div>
+class Single extends Component {
+    state = {
+        item_loading: true
+      }
+
+    componentDidMount() {
+        const cat_id = Number(this.props.match.params.id)
+        console.log(cat_id)
+        this.props.startLoadingItems(cat_id)
+        .then(() => this.setState({item_loading: false}))
     }
 
-    var categories_list = []
-    if (props.loading === false) {
-        categories_list = categories.categories
-    }
+    render() {
+        console.log(this.props)
+        console.log(this.state)
+        const {match, categories} = this.props
+        const id = Number(match.params.id)
+        
+        if (!this.props.access_token) {
+            return <div className='loader'> Access denied </div>
+        }
 
-    const category = categories_list.find((cat) => cat.id === id)
+        var categories_list = []
+        if (this.props.loading === false) {
+            categories_list = categories.categories
+        }
 
-    if (props.loading === true) {
-         return <div className='loader'>
-             ...loading
-        </div>     
-    } else if (category) {
-        return <div>
-            <Logout/>
-             <center><Category category={category} key={id}/></center>
-             <Item/>
-        </div>
-    } else {
-        return <h1> No Post Found </h1>
+        const category = categories_list.find((cat) => cat.id === id)
+
+        if (this.props.loading === true) {
+            return <div className='loader'>
+                ...loading
+            </div>     
+        } else if (category) {
+            return <div>
+                <Logout/>
+                <center><Category category={category} key={id}/></center>
+                <Items {...this.props} loading={this.state.item_loading}/>
+            </div>
+        } else {
+            return <h1> No Post Found </h1>
+        }
     }
 }
 

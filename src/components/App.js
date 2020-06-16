@@ -7,7 +7,7 @@ import {withRouter} from 'react-router'
 function mapStateToProps(state) {
     return {
         categories: state.categories,
-        //items: state.items
+        items: state.items,
         access_token: state.access_token,
         error: state.error
     }

@@ -27,7 +27,7 @@ def create_app():
     api.add_resource(Registration, '/registrations')    
     api.add_resource(CategoryList, '/categories/')
     api.add_resource(Category, '/categories/<int:category_id>')
-    api.add_resource(ItemList, '/categories/<int:category_id>/items')
+    api.add_resource(ItemList, '/categories/<int:category_id>/items/')
     api.add_resource(Item, '/categories/<int:category_id>/items/<int:item_id>')
     api.add_resource(Me, '/me')
     api.add_resource(Login, '/login')

@@ -5,16 +5,6 @@ import {Category} from './index'
 import {Logout} from '../user/index'
 
 class Categories extends Component {
-    constructor() {
-        super()
-        this.handleClick = this.handleClick.bind(this)
-    }
-
-    handleClick(event) {
-        event.preventDefault()
-        this.props.history.push('/')
-    }
-
     render() {
         const access_token = this.props.access_token
         const categories = this.props.categories

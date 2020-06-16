@@ -34,7 +34,7 @@ a:hover {
   color: grey;
 }
 
-.cat-list {
+.cat-list, .item-list {
   display: flex;
   max-width: 1000px;
   margin: 0 auto;
@@ -42,7 +42,7 @@ a:hover {
   justify-content: center;
 }
 
-.category {
+.category, .item {
   width: calc(30%);
   margin-left: 2rem;
   margin-top: 2rem;
