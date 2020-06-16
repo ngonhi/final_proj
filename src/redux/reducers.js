@@ -31,9 +31,12 @@ function error(state=[], action) {
 }
 
 function items(state={}, action) {
+    console.log(state)
+    console.log(action.item)
     switch(action.type) {
-        //case 'ADD_ITEM':
-            //return {...state, action.item}
+        case 'ADD_ITEM':
+            return {'total_items': state['total_items'] + 1, 
+                    'items': [...state['items'], action.item]} 
          case 'LOAD_ITEMS':
              return action.items
         // case 'EDIT_ITEM':

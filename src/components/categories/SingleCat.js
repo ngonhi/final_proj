@@ -1,13 +1,21 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
 import Category from './Category'
 import Items from '../Items/Items' // Need to change to index
 import Logout from '../User/Logout'
 
 class SingleCat extends Component {
     componentDidMount() {
+        console.log('mount cat')
         const cat_id = Number(this.props.match.params.id)
         this.props.setCatId(cat_id)
     }
+
+    // componentDidUpdate() {
+    //     console.log('update cat')
+    //     const cat_id = Number(this.props.match.params.id)
+    //     this.props.setCatId(cat_id)
+    // }
 
     render() {
         console.log('SingleCat')
@@ -33,7 +41,9 @@ class SingleCat extends Component {
         } else if (category) {
             return <div>
                 <Logout/>
-                <center><Category category={category}/></center>
+                <center><Category category={category}/>
+                <Link className='button' to={`/Category/${id}/AddItem`}>Add Item</Link>
+                </center>
                 <Items {...this.props} item_loading={this.props.item_loading}/>
             </div>
         } else {

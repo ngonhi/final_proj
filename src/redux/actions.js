@@ -95,7 +95,7 @@ export function startLoadingItems(category_id) {
 } 
 
 
-export function startAddingItem(category_id, item, token) {
+export function startAddingItem(item, category_id, token) {
     return (dispatch) => {
         const url = 'http://127.0.0.1:5000/categories/' + category_id + '/items/'
         fetch(url, {
@@ -107,7 +107,7 @@ export function startAddingItem(category_id, item, token) {
                 body: JSON.stringify(item)
             })
             .then(res => res.json())
-            .then(data => dispatch(addItem(data))) // Need to solve for API error 
+            .then(data => dispatch(addItem(data)))
             .catch((error) => console.log(error.message))
     }
 }

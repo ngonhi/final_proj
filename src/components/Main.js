@@ -3,6 +3,7 @@ import {Route, Link} from 'react-router-dom'
 import {AddCategory, Categories, SingleCat} from './Categories/index'
 import {User, Login, Register} from './User/index'
 import SingleItem from './Items/SingleItem'
+import AddItem from './Items/AddItem'
 
 class Main extends Component {
   state = {
@@ -59,6 +60,9 @@ class Main extends Component {
         <Route path='/AddCategory' render = {() => (
           <AddCategory {...this.props}/>
         )}/>
+
+        <Route path='/Category/:cat_id/AddItem' render = {(params) => 
+              <AddItem {...this.props} {...params} cat_id={this.state.cat_id} setCatId={this.setCatId}/>}/> 
 
         <Route exact path='/Category/:id' render = {(params) =>
           <SingleCat loading={this.state.loading} {...this.props} {...params} 

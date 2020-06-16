@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Item from '../Items/Item' // Need to change to index
+import Item from '../Items/Item'
 import {Logout} from '../User/index'
 
 class SingleItem extends Component {
