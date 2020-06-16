@@ -6,8 +6,8 @@ function Item(props) {
     const item = props.item
     return <div className='item'>
                 <h2> {item.name} </h2>
-                <p> {item.description} </p>
-                <p> {item.price} </p>
+                <p> Description: {item.description} </p>
+                <p> Price: {item.price} </p>
            </div>
 }
 

@@ -1,23 +1,20 @@
 import React, {Component} from 'react'
 import Category from './Category'
-import Items from '../items/Items'
+import Items from '../items/Items' // Need to change to index
 import Logout from '../user/Logout'
 
-class Single extends Component {
+class SingleCat extends Component {
     state = {
         item_loading: true
       }
 
     componentDidMount() {
         const cat_id = Number(this.props.match.params.id)
-        console.log(cat_id)
         this.props.startLoadingItems(cat_id)
         .then(() => this.setState({item_loading: false}))
     }
 
     render() {
-        console.log(this.props)
-        console.log(this.state)
         const {match, categories} = this.props
         const id = Number(match.params.id)
         
@@ -48,4 +45,4 @@ class Single extends Component {
     }
 }
 
-export default Single
+export default SingleCat

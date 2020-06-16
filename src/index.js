@@ -13,6 +13,7 @@ import {enhancer} from './middleWare/middleWare'
 const persistedState = loadFromLocalStorage()
 const store = createStore(rootReducer, persistedState, enhancer);
 
+//console.log(store.getState())
 store.subscribe(() => saveToLocalStorage(store.getState()));
 
 ReactDOM.render(

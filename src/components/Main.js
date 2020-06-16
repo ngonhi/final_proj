@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Route, Link} from 'react-router-dom'
-import {AddCategory, Categories, Single} from './categories/index'
+import {AddCategory, Categories, SingleCat} from './categories/index'
 import {User, Login, Register} from './user/index'
 
 class Main extends Component {
@@ -14,8 +14,6 @@ class Main extends Component {
   }
 
   render () {
-    console.log(this.state)
-    console.log(this.props)
     return (
       <div>
         <h1> <Link to='/'> Categories Catalog </Link> </h1>
@@ -38,7 +36,7 @@ class Main extends Component {
         )}/>
 
         <Route path='/Category/:id' render = {(params) =>
-          <Single loading={this.state.loading} {...this.props} {...params}/>
+          <SingleCat loading={this.state.loading} {...this.props} {...params}/>
         }/>
       </div>
     )
