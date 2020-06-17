@@ -22,7 +22,7 @@ class SingleCat extends Component {
         console.log(this.props)
         const {match, categories} = this.props
         const id = Number(match.params.id)
-        
+
         if (!this.props.access_token) {
             return <div className='loader'> Access denied </div>
         }

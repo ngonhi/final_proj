@@ -26,7 +26,7 @@ class Items extends Component {
                     <center><p> There are a total of {items.total_items} items</p></center>
                     <div className='item-list'>
                         {items_list.map((item, index) => 
-                            <Item item={item} key={index}/>)}
+                            <Item item={item} key={index} index={index}/>)}
                         </div>
                 </div>)
         }

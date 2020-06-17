@@ -113,6 +113,42 @@ export function startAddingItem(item, category_id, token) {
 }
 
 
+export function startEditingItem(item, cat_id, item_id, token, index) {
+    return (dispatch) => {
+        const url = 'http://127.0.0.1:5000/categories/' + cat_id + '/items/' + item_id
+        fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(item)
+            })
+            .then(res => res.json())
+            .then(data => dispatch(editItem(data, index)))
+            .catch((error) => console.log(error.message))
+    }
+}
+
+
+export function startDeletingItem(item, cat_id, item_id, token, index) {
+    return (dispatch) => {
+        const url = 'http://127.0.0.1:5000/categories/' + cat_id + '/items/' + item_id
+        fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(item)
+            })
+            .then(res => res.json())
+            .then(() => dispatch(deleteItem(index)))
+            .catch((error) => console.log(error.message))
+    }
+}
+
+
 export function loadItems(items) {
     return {
         type: 'LOAD_ITEMS',
@@ -129,7 +165,21 @@ export function addItem(item) {
 }
 
 
+export function editItem(item, index) {
+    return {
+        type: 'EDIT_ITEM',
+        item, 
+        index
+    }
+}
 
+
+export function deleteItem(index) {
+    return {
+        type: 'DELETE_ITEM',
+        index
+    }
+}
 
 // Actions for Error
 export function loadError(error) {

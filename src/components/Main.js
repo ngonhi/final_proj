@@ -4,6 +4,7 @@ import {AddCategory, Categories, SingleCat} from './Categories/index'
 import {User, Login, Register} from './User/index'
 import SingleItem from './Items/SingleItem'
 import AddItem from './Items/AddItem'
+import EditItem from './Items/EditItem'
 
 class Main extends Component {
   state = {
@@ -20,11 +21,13 @@ class Main extends Component {
   componentDidMount() {
     this.props.startLoadingCats()
     .then(() => this.setState({loading: false}))
+    //localStorage.setItem('cat_id', this.state.cat_id)
   }
 
 
   // Items are loaded when SingleCat is loaded
   componentDidUpdate() {
+    //this.setState({cat_id: localStorage.getItem('cat_id')})
     if (this.state.cat_id !== 0 && Object.keys(this.props.items).length === 0) {
       console.log('loadItems')
       this.props.startLoadingItems(this.state.cat_id)
@@ -33,6 +36,8 @@ class Main extends Component {
   }
 
   setCatId(id) {
+    //localStorage.clear('cat_id')
+    //localStorage.setItem('cat_id', id)
     this.setState({cat_id: id})
   }
 
@@ -62,7 +67,10 @@ class Main extends Component {
         )}/>
 
         <Route path='/Category/:cat_id/AddItem' render = {(params) => 
-              <AddItem {...this.props} {...params} cat_id={this.state.cat_id} setCatId={this.setCatId}/>}/> 
+              <AddItem {...this.props} {...params} cat_id={this.state.cat_id}/>}/> 
+
+        <Route path='/Category/:cat_id/EditItem/:item_id/:index' render = {(params) => 
+              <EditItem {...this.props} {...params} cat_id={this.state.cat_id}/>}/>         
 
         <Route exact path='/Category/:id' render = {(params) =>
           <SingleCat loading={this.state.loading} {...this.props} {...params} 
