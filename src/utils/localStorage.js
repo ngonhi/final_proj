@@ -1,7 +1,12 @@
 export const saveToLocalStorage = (state) => {
   try {
       // Only saves access_token
-      const localState = JSON.stringify({categories: {}, access_token: state['access_token'], error: []})
+      const localState = JSON.stringify({
+        categories: state['categories'], 
+        items: state['items'],
+        access_token: state['access_token'], 
+        user: state['user'],
+        error: []})
       localStorage.setItem('state', localState);
   } catch (error) {
       console.log(error);

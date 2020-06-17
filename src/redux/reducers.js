@@ -1,7 +1,10 @@
-import {combineReducers} from 'redux'
+import {combineReducers, bindActionCreators} from 'redux'
 
 function categories(state={}, action) {
+    console.log(action)
     switch (action.type) {
+        case 'FETCH_CATEGORIES':
+            return action.cats
         case 'ADD_CATEGORY':
             return {'total_categories': state['total_categories'] + 1, 
                     'categories': [...state['categories'], action.cat]} 
@@ -21,7 +24,18 @@ function access_token(state='', action) {
     }
 }
 
-function error(state=[], action) {
+
+function user(state={}, action) {
+    switch(action.type) {
+        case 'LOAD_USER':
+            return action.user
+        default:
+            return state
+    }
+}
+
+
+function error(state={}, action) {
     switch(action.type) {
         case 'LOAD_ERROR':
             return action.error
@@ -48,6 +62,6 @@ function items(state={}, action) {
     }
 }
 
-const rootReducer = combineReducers({categories, access_token, error, items})
+const rootReducer = combineReducers({categories, access_token, error, items, user})
 
 export default rootReducer

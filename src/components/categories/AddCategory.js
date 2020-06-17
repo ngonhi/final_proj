@@ -9,15 +9,23 @@ class AddCategory extends Component {
 
     handleSubmit(event) {
         event.preventDefault()
-        const name = event.target.elements.name.value
-        const description = event.target.elements.des.value
+        const {name, des} = event.target.elements
         const category = {
-                "name": name,
-                "description": description
+                "name": name.value,
+                "description": des.value
             };
 
-        if (name && description) {
-            this.props.startAddingCat(category, this.props.access_token)
+        if (name && des) {
+            const url = window.$domain + '/categories/'
+            const option = {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + this.props.access_token,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(category)
+            }
+            this.props.fetchRequestObj("START_ADDING_CATEGORY", url, option)
             this.props.history.push(`/Categories`)
         }
     }

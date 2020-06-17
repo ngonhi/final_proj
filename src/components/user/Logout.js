@@ -15,6 +15,7 @@ class Logout extends Component {
     }
 
     render() {
+        console.log('Logout')
         if (this.state.navigate) {
             return <Redirect to="/" push={true}/>
         }

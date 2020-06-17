@@ -24,30 +24,56 @@ class Main extends Component {
   }
   
   componentDidMount() {
-    this.props.startLoadingCats()
+    const url = window.$domain + "/categories/?offset=0"
+    this.props.fetchRequestObj("START_LOADING_CATEGORIES", url)
     .then(() => this.setState({loading: false}))
-    //localStorage.setItem('cat_id', this.state.cat_id)
   }
 
-
-  // Items are loaded when SingleCat is loaded
   componentDidUpdate() {
-    //this.setState({cat_id: localStorage.getItem('cat_id')})
-    if (this.state.cat_id !== 0 && Object.keys(this.props.items).length === 0) {
-      console.log('loadItems')
-      this.props.startLoadingItems(this.state.cat_id)
-      .then(() => this.setState({item_loading: false}))
+    if (this.state.loading && Object.keys(this.props.categories).length !== 0) {
+      this.setState({loading: false})
+    }
+
+    if (this.state.item_loading && Object.keys(this.props.items).length !== 0) {
+      this.setState({item_loading: false})
     }
   }
 
+  updateStates = () => {
+    // if (this.state.cat_id !== 0) { // Add if item is empty then
+    //   console.log('load item')
+    //   const url = window.$domain + "/categories/" + this.state.cat_id + "/items/?offset=0"
+    //   this.props.fetchRequestObj("START_LOADING_ITEMS", url)
+    //   .then(() => this.setState({item_loading: false}))
+    // }
+
+    if (this.props.access_token && Object.keys(this.props.user).length === 0) {
+      console.log('load user')
+      const url = window.$domain + '/me' 
+      const option = {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + this.props.access_token,
+          'Content-Type': 'application/json'
+        }
+      }
+      this.props.fetchRequestObj("START_LOADING_USER", url, option)
+    }
+
+  }
+
   setCatId(id) {
-    //localStorage.clear('cat_id')
-    //localStorage.setItem('cat_id', id)
     this.setState({cat_id: id})
   }
 
+
+  setLoadingItem = () => {
+    this.setState({item_loading: false})
+  }
+
+
   render () {
-    console.log('Main')
+    this.updateStates()
     console.log(this.props)
     console.log(this.state)
     return (
@@ -79,7 +105,8 @@ class Main extends Component {
 
         <Route exact path='/Category/:id' render = {(params) =>
           <SingleCat loading={this.state.loading} {...this.props} {...params} 
-                     item_loading={this.state.item_loading} setCatId={this.setCatId}/>
+                     item_loading={this.state.item_loading} setCatId={this.setCatId}
+                     setLoadingItem={this.setLoadingItem}/>
         }/>
 
         <Route path='/Category/:cat_id/Item/:item_id' render = {(params) =>

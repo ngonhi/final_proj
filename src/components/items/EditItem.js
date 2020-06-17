@@ -22,7 +22,16 @@ class EditItem extends Component {
         const item_id = Number(this.props.match.params.item_id)
         const index = Number(this.props.match.params.index)
         if (name && description && price) {
-            this.props.startEditingItem(item, cat_id, item_id, this.props.access_token, index)
+            const url = window.$domain + '/categories/' + cat_id + '/items/' + item_id
+            const option = {
+                method: 'PUT',
+                headers: {
+                    'Authorization': 'Bearer ' + this.props.access_token,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(item)
+            }
+            this.props.fetchRequestObj("START_EDITING_ITEM", url, option, index)
             this.props.history.push(`/Category/${cat_id}/Item/${item_id}`)
         }
     }

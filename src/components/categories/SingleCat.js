@@ -9,16 +9,13 @@ class SingleCat extends Component {
         console.log('mount cat')
         const cat_id = Number(this.props.match.params.id)
         this.props.setCatId(cat_id)
+
+        const url = window.$domain + "/categories/" + cat_id + "/items/?offset=0"
+        this.props.fetchRequestObj("START_LOADING_ITEMS", url)
+        .then(() => this.props.setLoadingItem())
     }
 
-    // componentDidUpdate() {
-    //     console.log('update cat')
-    //     const cat_id = Number(this.props.match.params.id)
-    //     this.props.setCatId(cat_id)
-    // }
-
     render() {
-        console.log('SingleCat')
         console.log(this.props)
         const {match, categories} = this.props
         const id = Number(match.params.id)

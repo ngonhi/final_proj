@@ -9,18 +9,26 @@ class AddItem extends Component {
 
     handleSubmit(event) {
         event.preventDefault()
-        const name = event.target.elements.name.value
-        const description = event.target.elements.des.value
-        const price = event. target.elements.price.value
+        const {name, des, price} = event.target.elements
         const item = {
-                "name": name,
-                "description": description,
-                "price": price
+                "name": name.value,
+                "description": des.value,
+                "price": price.value
             };
  
         const cat_id = Number(this.props.match.params.cat_id)
-        if (name && description && price) {
-            this.props.startAddingItem(item, cat_id, this.props.access_token)
+
+        if (name && des && price) {
+            const url = window.$domain + '/categories/' + cat_id + '/items/'
+            const option = {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + this.props.access_token,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(item)
+            }
+            this.props.fetchRequestObj("START_ADDING_ITEM", url, option)
             this.props.history.push(`/Category/${cat_id}`)
         }
     }

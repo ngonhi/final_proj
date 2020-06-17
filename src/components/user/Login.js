@@ -9,15 +9,42 @@ class Login extends Component {
   // Handle submit event when user logs in
   handleSubmit(event) {
     event.preventDefault()
+    const {username, password} = event.target.elements
     const user = {
-        "username": event.target.elements.username.value,
-        "password": event.target.elements.password.value
+        "username": username.value,
+        "password": password.value
     }
-    this.props.startLoadingToken(user, 'login', `/Login`, this.props)
+
+    const url = window.$domain + '/login'
+    const option = {
+      method: 'POST',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    }
+
+    this.props.fetchRequestObj("START_LOADING_TOKEN", url, option)
+    .then(() => {
+      if(Object.keys(this.props.error).length !== 0) {
+        console.log(this.props.error)
+        this.props.history.push('/Login')
+      } else {
+      this.props.history.push('/Categories')
+      }
+    })
     //event.target.reset(); // To clear form content
   }
   
   render() {
+    const {message, status, statusText} = this.props.error
+    let error
+    if (Object.keys(this.props.error).length !== 0) {
+      error = <div className='error'> {status} - {statusText} - {message} </div>
+    } else {
+      error = null
+    }
     return (
       <div>
         <div className='form'>
@@ -27,11 +54,13 @@ class Login extends Component {
                     <button> Login </button>
                 </form>
         </div>
-        <div> {this.props.error ? this.props.error.map((value, index) =>
-          {return <center><li key={index}>{value}</li></center> }) : null} </div>
+        {error}
       </div>
     )
   }
 }
 
 export default Login
+
+{/* <div> {this.props.error ? this.props.error.map((value, index) =>
+          {return <center><li key={index}>{value}</li></center> }) : null} </div> */}

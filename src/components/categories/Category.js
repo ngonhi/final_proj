@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 
 function Category(props) {
-    console.log('Category')
     const cat = props.category
     return <div className='category'>
          <Link to={`/Category/${cat.id}`}>  

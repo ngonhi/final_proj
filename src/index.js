@@ -7,13 +7,14 @@ import {createStore} from 'redux';
 import './style/stylesheets.css';
 import App from './components/App';
 import rootReducer from './redux/reducers';
-import {loadFromLocalStorage, saveToLocalStorage} from './utils/utils'
-import {enhancer} from './middleWare/middleWare'
+import {loadFromLocalStorage, saveToLocalStorage} from './utils/localStorage'
+import {enhancer} from './middleware/middleWare'
+
+window.$domain = 'http://127.0.0.1:5000'
 
 const persistedState = loadFromLocalStorage()
 const store = createStore(rootReducer, persistedState, enhancer);
 
-//console.log(store.getState())
 store.subscribe(() => saveToLocalStorage(store.getState()));
 
 ReactDOM.render(
