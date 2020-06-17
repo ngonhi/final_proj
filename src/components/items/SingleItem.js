@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import Item from '../Items/Item'
-import {Logout} from '../User/index'
+import Item from './Item'
+import Logout from '../User/Logout'
 
 class SingleItem extends Component {
     componentDidMount() {

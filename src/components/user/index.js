@@ -1,6 +1,13 @@
-import Login from './Login'
-import Logout from './Logout'
-import Register from './Register'
-import User from './User'
+import React from 'react'
+import {Link} from 'react-router-dom'
 
-export {Login, Logout, Register, User}
+function User(props) {
+    return (
+        <div className='button-container'>
+            <Link to='/Register' className='button'> Register </Link>
+            <Link to='/Login' className='button'> Login </Link>
+        </div>
+    )
+}
+
+export default User

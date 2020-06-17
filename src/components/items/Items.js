@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Item} from './index'
-import {Logout} from '../User/index'
+import Item from './Item'
+import Logout from '../User/Logout'
 
 class Items extends Component {
     render() {

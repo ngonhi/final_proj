@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Logout} from '../User/index'
+import Logout from '../User/Logout'
 
 class AddCategory extends Component {
     constructor() {
