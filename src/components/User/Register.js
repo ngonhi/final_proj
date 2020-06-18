@@ -1,10 +1,23 @@
 import React, { Component } from 'react'
 
 class Register extends Component {
+  componentDidUpdate() {
+    if (Object.keys(this.props.user).length === 0) {
+    const url = window.$domain + '/me' 
+      const option = {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + this.props.access_token,
+          'Content-Type': 'application/json'
+        }
+      }
+    this.props.fetchRequestObj("START_LOADING_USER", url, option)
+    }
+  }
+
   handleSubmit = (event) => {
     event.preventDefault()
-
-    const {username, name, email, password} = event.target.element
+    const {username, name, email, password} = event.target.elements
     const newUser = {
         "username": username.value,
         "name": name.value,
@@ -12,7 +25,7 @@ class Register extends Component {
         "password": password.value
     }
 
-    const url = window.$domain + '/registration'
+    const url = window.$domain + '/registrations'
     const option = {
       method: 'POST',
       headers: {
@@ -21,7 +34,8 @@ class Register extends Component {
       },
       body: JSON.stringify(newUser)
     }
-
+    console.log(url)
+    console.log(option)
     this.props.fetchRequestObj("START_LOADING_TOKEN", url, option)
     .then(() => {
       if(Object.keys(this.props.error).length !== 0) {
@@ -34,6 +48,16 @@ class Register extends Component {
   }
 
   render() {
+    let error
+    if (this.props.error) {
+      if (Object.keys(this.props.error).length !== 0) {
+        const {message, status, statusText} = this.props.error
+        error = <div className='error'> {status} - {statusText} - {message} </div>
+      } else {
+        error = null
+      }
+    }
+
     return (
       <div>
         <div className='form'>
@@ -45,8 +69,7 @@ class Register extends Component {
                     <button> Register </button>
                 </form>
         </div>
-        <div> {this.props.error ? this.props.error.map((value, index) =>
-          {return <center><li key={index}>{value}</li></center> }) : null} </div>
+        {error}
       </div>
     )
   }

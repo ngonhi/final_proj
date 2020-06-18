@@ -5,6 +5,18 @@ export const fetchRequestObj = (type, url, option={}, index= 0) => {
     index: index
 }}
 
+export const modifyState = (type, payload, index) => {
+    let newAction
+    if (type.includes('_SUCCEEDED')) {
+      newAction = Object.assign({}, {type}, {payload}, {index})
+    } else {
+      const type = 'ERROR'
+      newAction = Object.assign({}, {type}, {payload})
+    }
+    delete newAction.promise
+    return newAction
+  }
+
 
 // Action for User
 export function loadToken(token) {
@@ -19,6 +31,13 @@ export function loadUser(user) {
     return {
         type: 'LOAD_USER',
         user
+    }
+}
+
+
+export function userLogout() {
+    return {
+        type: 'USER_LOGOUT'
     }
 }
 

@@ -48,14 +48,13 @@ class Login extends Component {
   render() {
     let error
     if (this.props.error) {
-      
-    if (Object.keys(this.props.error).length !== 0) {
-      const {message, status, statusText} = this.props.error
-      error = <div className='error'> {status} - {statusText} - {message} </div>
-    } else {
-      error = null
+      if (Object.keys(this.props.error).length !== 0) {
+        const {message, status, statusText} = this.props.error
+        error = <div className='error'> {status} - {statusText} - {message} </div>
+      } else {
+        error = null
+      }
     }
-  }
     return (
       <div>
         <div className='form'>

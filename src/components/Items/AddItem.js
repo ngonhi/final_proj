@@ -34,7 +34,7 @@ class AddItem extends Component {
         if (this.props.access_token) {
             return (
             <div>
-                <Logout/>
+                <Logout {...this.props}/>
                 <div className='form'>
                     <p> Add Item</p>
                     <form onSubmit={this.handleSubmit}> 

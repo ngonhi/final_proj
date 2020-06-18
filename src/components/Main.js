@@ -19,6 +19,7 @@ class Main extends Component {
   }
   
   componentDidMount() {
+    console.log('mount main')
     const url = window.$domain + "/categories/?offset=0"
     this.props.fetchRequestObj("START_LOADING_CATEGORIES", url)
     .then(() => this.setState({loading: false}))
@@ -45,6 +46,7 @@ class Main extends Component {
 
 
   render () {
+    console.log(this.props)
     return (
       <div>
         <h1> <Link to='/'> Categories Catalog </Link> </h1>
@@ -58,8 +60,7 @@ class Main extends Component {
           <Login {...this.props}/>}/>
 
         <Route path='/Categories' render={() => (
-          <Categories loading={this.state.loading} categories={this.props.categories} 
-                      access_token={this.props.access_token} history={this.props.history}/> 
+          <Categories loading={this.state.loading} {...this.props} /> 
         )}/>
 
         <Route path='/AddCategory' render = {() => (

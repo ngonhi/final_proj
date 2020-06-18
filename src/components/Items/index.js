@@ -19,7 +19,7 @@ class Items extends Component {
         else if (items) {
             return ( 
                 <div>
-                    <Logout/>
+                    <Logout {...this.props}/>
                     <center><p> There are a total of {items.total_items} items</p></center>
                     <div className='item-list'>
                         {items_list.map((item, index) => 

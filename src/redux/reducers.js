@@ -3,13 +3,11 @@ import {combineReducers, bindActionCreators} from 'redux'
 function categories(state={}, action) {
     console.log(action)
     switch (action.type) {
-        case 'FETCH_CATEGORIES':
-            return action.cats
-        case 'ADD_CATEGORY':
+        case 'START_ADDING_CATEGORY_SUCCEEDED':
             return {'total_categories': state['total_categories'] + 1, 
-                    'categories': [...state['categories'], action.cat]} 
-        case 'LOAD_CATEGORIES':
-            return action.cats
+                    'categories': [...state['categories'], action.payload]} 
+        case 'START_LOADING_CATEGORIES_SUCCEEDED':
+            return action.payload
         default:
             return state
     }
@@ -17,8 +15,8 @@ function categories(state={}, action) {
 
 function access_token(state='', action) {
     switch(action.type) {
-        case 'LOAD_TOKEN':
-            return action.token
+        case 'START_LOADING_TOKEN_SUCCEEDED':
+            return action.payload['access_token']
         default:
             return state
     }
@@ -27,18 +25,19 @@ function access_token(state='', action) {
 
 function user(state={}, action) {
     switch(action.type) {
-        case 'LOAD_USER':
-            return action.user
+        case 'START_LOADING_USER_SUCCEEDED':
+            return action.payload
         default:
             return state
     }
 }
 
 
-function error(state={}, action) {
+function error(state=[], action) {
+    console.log(action)
     switch(action.type) {
-        case 'LOAD_ERROR':
-            return action.error
+        case 'ERROR':
+            return action.payload
         default:
             return state
     }
@@ -46,15 +45,15 @@ function error(state={}, action) {
 
 function items(state={}, action) {
     switch(action.type) {
-        case 'ADD_ITEM':
+        case 'START_ADDING_ITEM_SUCCEEDED':
             return {'total_items': state['total_items'] + 1, 
-                    'items': [...state['items'], action.item]} 
-         case 'LOAD_ITEMS':
-             return action.items
-        case 'EDIT_ITEM':
+                    'items': [...state['items'], action.payload]} 
+         case 'START_LOADING_ITEMS_SUCCEEDED':
+             return action.payload
+        case 'START_EDITING_ITEM_SUCCEEDED':
              return {'total_items': state['total_items'] + 1, 
-                    'items': [...state['items'].slice(0, action.index), action.item, ...state['items'].slice(action.index+1)]}
-        case 'DELETE_ITEM':
+                    'items': [...state['items'].slice(0, action.index), action.payload, ...state['items'].slice(action.index+1)]}
+        case 'START_DELETING_ITEM_SUCCEEDED':
              return {'total_items': state['total_items'] - 1, 
                     'items': [...state['items'].slice(0, action.index), ...state['items'].slice(action.index+1)]}
         default:
@@ -62,6 +61,13 @@ function items(state={}, action) {
     }
 }
 
-const rootReducer = combineReducers({categories, access_token, error, items, user})
+const appReducer = combineReducers({categories, access_token, error, items, user})
+const rootReducer = (state, action) => {
+    if (action.type === 'USER_LOGOUT') {
+        state = undefined
+    }
+
+    return appReducer(state, action)
+}
 
 export default rootReducer

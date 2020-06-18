@@ -7,14 +7,11 @@ class Logout extends Component {
     logout = () => {
         localStorage.clear()
         this.setState({navigate: true})
+        this.props.userLogout()
+        this.props.history.push('/')
     }
 
     render() {
-        console.log('Logout')
-        if (this.state.navigate) {
-            return <Redirect to="/" push={true}/>
-        }
-
         return <button className='logout-button' onClick={this.logout}> Log Out </button>
     }
 }

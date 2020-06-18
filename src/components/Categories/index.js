@@ -8,27 +8,30 @@ class Categories extends Component {
     render() {
         console.log('Categories')
         const {access_token, categories} = this.props
-        const categories_list = categories.categories
+        
         
         if(!access_token) {
             return <div className='loader'> Access denied </div>
         }
 
-        else if (this.props.loading === true) {
+        if (this.props.loading) {
             return <div className='loader'> ... loading </div>
-        }
-
-        else if (categories) {
-            return ( 
-                <div>
-                    <Logout/>
-                    <Link className='add-icon' to='/AddCategory'></Link>
-                    <center><p> There are a total of {categories.total_categories} categories</p></center>
-                    <div className='cat-list'>
-                        {categories_list.map((category, index) => 
-                            <Category category={category} key={index}/>)}
-                        </div>
-                </div>)
+        } else if (!this.props.loading) {
+            const categories_list = categories.categories
+            if (categories_list) {
+                return ( 
+                    <div>
+                        <Logout {...this.props}/>
+                        <Link className='add-icon' to='/AddCategory'></Link>
+                        <center><p> There are a total of {categories.total_categories} categories</p></center>
+                        <div className='cat-list'>
+                            {categories_list.map((category, index) => 
+                                <Category category={category} key={index}/>)}
+                            </div>
+                    </div>)
+            } else {
+                return <div className='loader'>No Categories Found</div>
+            }
         }
     }
     

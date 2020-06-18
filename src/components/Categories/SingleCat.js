@@ -6,7 +6,6 @@ import Logout from '../User/Logout'
 
 class SingleCat extends Component {
     componentDidMount() {
-        console.log('mount cat')
         const cat_id = Number(this.props.match.params.id)
         this.props.setCatId(cat_id)
 
@@ -37,7 +36,7 @@ class SingleCat extends Component {
             </div>     
         } else if (category) {
             return <div>
-                <Logout/>
+                <Logout {...this.props}/>
                 <center><Category category={category}/>
                 <Link className='button' to={`/Category/${id}/AddItem`}>Add Item</Link>
                 </center>

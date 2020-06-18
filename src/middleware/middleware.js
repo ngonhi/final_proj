@@ -11,33 +11,14 @@ const middleware = store => next => async action => {
     const response = await action.promise;
     const {type, payload} = await handleResponse(response, action.type)
 
-    if (type.includes('_SUCCEEDED')) {
-      if (action.type === "START_LOADING_CATEGORIES") {
-        store.dispatch(actions.loadCats(payload))
-      } else if (action.type === "START_ADDING_CATEGORY") {
-        store.dispatch(actions.addCat(payload))
-      } else if (action.type === "START_LOADING_ITEMS") {
-        store.dispatch(actions.loadItems(payload))
-      } else if (action.type === "START_ADDING_ITEM") {
-        store.dispatch(actions.addItem(payload))
-      } else if (action.type === "START_EDITING_ITEM") {
-        store.dispatch(actions.editItem(payload, action.index))
-      } else if (action.type === "START_DELETING_ITEM") {
-        store.dispatch(actions.deleteItem(action.index))
-      } else if (action.type === "START_LOADING_USER") {
-        store.dispatch(actions.loadUser(payload))
-      } else if (action.type === "START_LOADING_TOKEN") {
-        store.dispatch(actions.loadToken(payload['access_token']))
-      } 
-   } else if (type.includes('_FAILED')) {
-          store.dispatch(actions.loadError(payload))
-      }
+    next(actions.modifyState(type, payload, action.index))
 }
 
 
 async function handleResponse(response, type) {
   return response.json()
   .then(json => {
+    console.log(response)
     if(response.ok || response.status >= 200 && response.status < 300) {
       return {
         type: `${type}_SUCCEEDED`,

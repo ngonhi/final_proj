@@ -28,8 +28,8 @@ class SingleItem extends Component {
         console.log(user)
         console.log(item)
         let modifyButtons 
-        if (user.id = item.user_id) {
-            modifyButtons = <div className='button-container'>
+        if (user.id === item.user_id) {
+            return <div className='button-container'>
                 <Link className='button' 
                     to={`/Category/${cat_id}/EditItem/${item_id}/${index}`}>
                     Edit Item</Link>
@@ -38,10 +38,8 @@ class SingleItem extends Component {
                     Remove Item </button> 
             </div>
         } else {
-            modifyButtons = null
+            return null
         }
-
-        return modifyButtons
     }
 
 
@@ -56,17 +54,16 @@ class SingleItem extends Component {
             </div>
         } else if (this.props.item_loading === false) {  
             const {match, items} = this.props
-            const params = match.params
-            const item_id = Number(params.item_id)
-            const cat_id = Number(params.cat_id)   
+            const item_id = Number(match.params.item_id)
+            const cat_id = Number(match.params.cat_id)   
             const items_list = items.items
             const item = items_list.find((item) => item.id === item_id)
             const index = items_list.findIndex((item) => item.id === item_id)
             if (item) {
                 const modifyButtons = this.modifyButtons(item, cat_id, item_id, index, 
-                    this.props.access_token, this.props.user)
+                      this.props.access_token, this.props.user)
                 return <div>
-                    <Logout/>
+                    <Logout {...this.props}/>
                     <center>
                         <h2> Item Detail </h2>
                         <Item item={item} index={index}/>

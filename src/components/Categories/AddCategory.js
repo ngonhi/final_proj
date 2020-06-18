@@ -29,7 +29,7 @@ class AddCategory extends Component {
         if (this.props.access_token) {
             return (
             <div>
-                <Logout/>
+                <Logout {...this.props}/>
                 <div className='form'>
                     <form onSubmit={this.handleSubmit}> 
                         <input type='text' placeholder='Name' name='name'></input>
