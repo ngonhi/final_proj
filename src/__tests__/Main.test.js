@@ -14,10 +14,16 @@ configure({ adapter: new Adapter() })
 
 describe('<Main /> component', () => {
     const props = {
-      startLoadingCats: jest.fn().mockResolvedValue({payload: {result: {}}}),
-      startLoadingItems: jest.fn().mockResolvedValue({payload: {result: {}}}),
-      access_token: '',
-      categories: {}
+      fetchRequestObj: jest.fn().mockResolvedValue({payload: {result: {}}}),
+      categories: {
+        'total_categories': 1, 
+        'categories': [{"description": "Electronics Laptop", "updated": null, id: 1, "name": "Laptop", "created": null}]
+      },
+      items: {
+        'total_items': 1, 
+        'items': [{"category_id": 1, "created": null, "description": "This is a really good laptop", "id": 1,
+          "name": "DellXPS", "price": 1500, "updated": null, "user_id": 1}]
+      }
     }
     it('initial loading is false', () => {
       const wrapper = shallow(<Main {...props} />)
@@ -41,7 +47,7 @@ describe('<Main /> component', () => {
           <Main {...props}/>
         </MemoryRouter>
       )
-      expect(wrapper.find(User)).toHaveLength(1)
+      expect(wrapper.find('User')).toHaveLength(1)
       wrapper.unmount()
     })
     it('/Register direct to Register', () => {
@@ -50,7 +56,7 @@ describe('<Main /> component', () => {
           <Main {...props}/>
         </MemoryRouter>
       )
-      expect(wrapper.find(Register)).toHaveLength(1)
+      expect(wrapper.find('Register')).toHaveLength(1)
       wrapper.unmount()
     })
     it('/Login direct to Login', () => {
@@ -59,7 +65,7 @@ describe('<Main /> component', () => {
           <Main {...props}/>
         </MemoryRouter>
       )
-      expect(wrapper.find(Login)).toHaveLength(1)
+      expect(wrapper.find('Login')).toHaveLength(1)
       wrapper.unmount()
     })
     it('/Categories direct to Categories', () => {
@@ -68,7 +74,7 @@ describe('<Main /> component', () => {
           <Main {...props}/>
         </MemoryRouter>
       )
-      expect(wrapper.find(Categories)).toHaveLength(1)
+      expect(wrapper.find('Categories')).toHaveLength(1)
       wrapper.unmount()
     })
     it('/AddCategory direct to AddCategory', () => {
@@ -77,7 +83,7 @@ describe('<Main /> component', () => {
           <Main {...props}/>
         </MemoryRouter>
       )
-      expect(wrapper.find(AddCategory)).toHaveLength(1)
+      expect(wrapper.find('AddCategory')).toHaveLength(1)
       wrapper.unmount()
     })
     it('/Category/:id direct to SingleCat', () => {
@@ -86,18 +92,18 @@ describe('<Main /> component', () => {
           <Main {...props}/>
         </MemoryRouter>
       )
-      expect(wrapper.find(SingleCat)).toHaveLength(1)
+      expect(wrapper.find('SingleCat')).toHaveLength(1)
       wrapper.unmount()
     })
     it('calls componentDidMount', () => {
       jest.spyOn(Main.prototype, 'componentDidMount')
       const wrapper = shallow(<Main {...props}/>)
       expect(Main.prototype.componentDidMount.mock.calls.length).toBe(1)
-      expect(props.startLoadingCats).toHaveBeenCalled()
+      expect(props.fetchRequestObj).toHaveBeenCalled()
     })
     it('update state after mounting', async() => {
       const wrapper = shallow(<Main {...props}/>)
-      await props.startLoadingCats()
+      await props.fetchRequestObj()
       expect(wrapper.state('loading')).toEqual(false)
     })
 })

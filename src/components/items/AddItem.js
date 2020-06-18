@@ -34,7 +34,6 @@ class AddItem extends Component {
     }
 
     render() {
-        console.log(this.props)
         const cat_id = Number(this.props.match.params.cat_id)
         console.log(cat_id)
         if (this.props.access_token) {

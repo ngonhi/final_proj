@@ -5,7 +5,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import toJson from 'enzyme-to-json'
 import { MemoryRouter } from 'react-router'
 
-import {User} from '../components/user/index'
+import User from '../components/User/index'
 
 configure({ adapter: new Adapter() })
 

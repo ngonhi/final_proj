@@ -10,13 +10,31 @@ class Register extends Component {
     event.preventDefault()
 
     const newUser = {
-        "email": event.target.elements.email.value,
         "username": event.target.elements.username.value,
-        "password": event.target.elements.password.value,
-        "name": event.target.elements.name.value
+        "name": event.target.elements.name.value,
+        "email": event.target.elements.email.value,
+        "password": event.target.elements.password.value
     }
 
-    this.props.startLoadingToken(newUser, 'registrations', `/Register`, this.props)
+    const url = window.$domain + '/registration'
+    const option = {
+      method: 'POST',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newUser)
+    }
+
+    this.props.fetchRequestObj("START_LOADING_TOKEN", url, option)
+    .then(() => {
+      if(Object.keys(this.props.error).length !== 0) {
+        console.log(this.props.error)
+        this.props.history.push('/Registration')
+      } else {
+      this.props.history.push('/Categories')
+      }
+    })
   }
 
   render() {

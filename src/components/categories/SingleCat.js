@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import Category from './Category'
-import Items from '../Items/Items' // Need to change to index
+import Items from '../Items/index'
 import Logout from '../User/Logout'
 
 class SingleCat extends Component {
@@ -16,7 +16,7 @@ class SingleCat extends Component {
     }
 
     render() {
-        console.log(this.props)
+        console.log(this.props.items)
         const {match, categories} = this.props
         const id = Number(match.params.id)
 
@@ -24,7 +24,7 @@ class SingleCat extends Component {
             return <div className='loader'> Access denied </div>
         }
 
-        var categories_list = []
+        let categories_list = []
         if (this.props.loading === false) {
             categories_list = categories.categories
         }

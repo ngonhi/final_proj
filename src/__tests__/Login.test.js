@@ -1,5 +1,5 @@
 import React from 'react'
-import {Login} from '../components/user/index'
+import Login from '../components/User/Login'
 import { configure, shallow, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import toJson from 'enzyme-to-json'
@@ -7,7 +7,8 @@ import toJson from 'enzyme-to-json'
 configure({ adapter: new Adapter() })
 
 const props = {
-  startLoadingToken: jest.fn()
+  fetchRequestObj: jest.fn().mockResolvedValue({payload: {result: {}}}),
+  error: []
 }
 
 describe('<Login /> rendering', () => {
@@ -15,7 +16,7 @@ describe('<Login /> rendering', () => {
       const wrapper = shallow(<Login />)
       expect(toJson(wrapper)).toMatchSnapshot()
     })
-    it('should call startLoadingToken when submit', () => {
+    it('should call fetchRequestObj when submit', () => {
       const wrapper = mount(<Login {...props}/>);
       wrapper.find('form').simulate('submit');
       const inputEle = wrapper.find('input')
@@ -23,10 +24,21 @@ describe('<Login /> rendering', () => {
         "username": inputEle.at(0).instance().value,
         "password": inputEle.at(1).instance().value,
       }
+
+      const url = window.$domain + '/login'
+      const option = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+      }
+      const type = "START_LOADING_TOKEN"
       
-      expect(props.startLoadingToken).toHaveBeenCalledTimes(1);
-      expect(props.startLoadingToken).toHaveBeenCalledWith(
-        user, 'login', `/Login`, props)
+      expect(props.fetchRequestObj).toHaveBeenCalledTimes(1);
+      expect(props.fetchRequestObj).toHaveBeenCalledWith(
+        type, url, option)
       wrapper.unmount()
     })
     it('should contain .form class', () => {

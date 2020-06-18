@@ -36,15 +36,32 @@ class Login extends Component {
     })
     //event.target.reset(); // To clear form content
   }
+
+  componentDidUpdate() {
+    if (Object.keys(this.props.user).length === 0) {
+    const url = window.$domain + '/me' 
+      const option = {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + this.props.access_token,
+          'Content-Type': 'application/json'
+        }
+      }
+    this.props.fetchRequestObj("START_LOADING_USER", url, option)
+    }
+  }
   
   render() {
-    const {message, status, statusText} = this.props.error
     let error
+    if (this.props.error) {
+      
     if (Object.keys(this.props.error).length !== 0) {
+      const {message, status, statusText} = this.props.error
       error = <div className='error'> {status} - {statusText} - {message} </div>
     } else {
       error = null
     }
+  }
     return (
       <div>
         <div className='form'>

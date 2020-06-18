@@ -39,29 +39,6 @@ class Main extends Component {
     }
   }
 
-  updateStates = () => {
-    // if (this.state.cat_id !== 0) { // Add if item is empty then
-    //   console.log('load item')
-    //   const url = window.$domain + "/categories/" + this.state.cat_id + "/items/?offset=0"
-    //   this.props.fetchRequestObj("START_LOADING_ITEMS", url)
-    //   .then(() => this.setState({item_loading: false}))
-    // }
-
-    if (this.props.access_token && Object.keys(this.props.user).length === 0) {
-      console.log('load user')
-      const url = window.$domain + '/me' 
-      const option = {
-        method: 'GET',
-        headers: {
-          'Authorization': 'Bearer ' + this.props.access_token,
-          'Content-Type': 'application/json'
-        }
-      }
-      this.props.fetchRequestObj("START_LOADING_USER", url, option)
-    }
-
-  }
-
   setCatId(id) {
     this.setState({cat_id: id})
   }
@@ -73,9 +50,6 @@ class Main extends Component {
 
 
   render () {
-    this.updateStates()
-    console.log(this.props)
-    console.log(this.state)
     return (
       <div>
         <h1> <Link to='/'> Categories Catalog </Link> </h1>
