@@ -158,3 +158,24 @@ button:hover, .button:hover, .logout-button:hover, button:focus, .button:focus  
   justify-content: center;
   font-size: 14pt;
 }
+
+ul {
+  list-style-type: none;
+}
+
+.pagination {
+  display: inline-block;
+}
+
+.pagination li {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  border: 1px solid #ddd; 
+  margin: 0 4px;
+}
+
+.pagination li:hover {
+  background-color: #ddd;
+}

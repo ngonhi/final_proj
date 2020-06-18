@@ -20,7 +20,7 @@ class SingleItem extends Component {
             body: JSON.stringify(item)
         }
         this.props.fetchRequestObj("START_DELETING_ITEM", url, option, index) 
-        this.props.history.push(`/Category/${cat_id}`)
+        this.props.history.push(`/category/${cat_id}`)
     }
 
 
@@ -31,7 +31,7 @@ class SingleItem extends Component {
         if (user.id === item.user_id) {
             return <div className='button-container'>
                 <Link className='button' 
-                    to={`/Category/${cat_id}/EditItem/${item_id}/${index}`}>
+                    to={`/category/${cat_id}/editItem/${item_id}/${index}`}>
                     Edit Item</Link>
                 <button onClick = {() => 
                     this.handleClick(item, cat_id, item_id, index, access_token)}> 

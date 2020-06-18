@@ -21,7 +21,7 @@ class AddCategory extends Component {
                 body: JSON.stringify(category)
             }
             this.props.fetchRequestObj("START_ADDING_CATEGORY", url, option)
-            this.props.history.push(`/Categories`)
+            this.props.history.push(`/categories`)
         }
     }
 

@@ -20,7 +20,7 @@ class CategoryList(Resource):
         """
         try:
             offset = int(request.args.get('offset'))
-            limit = CategoryModel.count_rows() #Edit to show all categories
+            limit = int(request.args.get('limit'))
             results = CategoryModel.find_based_on_offset_and_limit(offset, limit)
         except Exception:
             raise InvalidUsage('Error occurred because of offset and limit parameters.', 500)

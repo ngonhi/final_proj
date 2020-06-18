@@ -8,42 +8,36 @@ class SingleCat extends Component {
     componentDidMount() {
         const cat_id = Number(this.props.match.params.id)
         this.props.setCatId(cat_id)
-
-        const url = window.$domain + "/categories/" + cat_id + "/items/?offset=0"
-        this.props.fetchRequestObj("START_LOADING_ITEMS", url)
-        .then(() => this.props.setLoadingItem())
     }
 
     render() {
-        console.log(this.props.items)
-        const {match, categories} = this.props
-        const id = Number(match.params.id)
+        console.log(this.props)
+        const {match, categories, loading} = this.props
+        const cat_id = Number(match.params.id)
 
         if (!this.props.access_token) {
             return <div className='loader'> Access denied </div>
         }
 
-        let categories_list = []
-        if (this.props.loading === false) {
-            categories_list = categories.categories
-        }
-
-        const category = categories_list.find((cat) => cat.id === id)
-
-        if (this.props.loading === true || this.props.item_loading === true) {
+        if (loading && Object.keys(categories).length === 0) {
             return <div className='loader'>
                 ...loading
             </div>     
-        } else if (category) {
-            return <div>
-                <Logout {...this.props}/>
-                <center><Category category={category}/>
-                <Link className='button' to={`/Category/${id}/AddItem`}>Add Item</Link>
-                </center>
-                <Items {...this.props} item_loading={this.props.item_loading}/>
-            </div>
         } else {
-            return <h1> No Category Found </h1>
+            const categories_list = categories.categories
+            const category = categories_list.find((cat) => cat.id === cat_id)
+            if (category) {
+                return <div>
+                    <Logout {...this.props}/>
+                    <center>
+                        <Category category={category}/>
+                        <Link className='button' to={`/category/${cat_id}/addItem`}>Add Item</Link>
+                    </center>
+                    <Items cat_id={cat_id} {...this.props} item_loading={this.props.item_loading}/>
+                </div>
+            } else {
+                return <h1> No Category Found </h1>
+            }
         }
     }
 }

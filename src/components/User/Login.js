@@ -23,16 +23,16 @@ class Login extends Component {
     .then(() => {
       if(Object.keys(this.props.error).length !== 0) {
         console.log(this.props.error)
-        this.props.history.push('/Login')
+        this.props.history.push('/login')
       } else {
-      this.props.history.push('/Categories')
+      this.props.history.push('/categories')
       }
     })
     //event.target.reset(); // To clear form content
   }
 
   componentDidUpdate() {
-    if (Object.keys(this.props.user).length === 0) {
+    if (this.props.access_token && Object.keys(this.props.user).length === 0) {
     const url = window.$domain + '/me' 
       const option = {
         method: 'GET',

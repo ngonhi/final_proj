@@ -40,9 +40,9 @@ class Register extends Component {
     .then(() => {
       if(Object.keys(this.props.error).length !== 0) {
         console.log(this.props.error)
-        this.props.history.push('/Registration')
+        this.props.history.push('/registration')
       } else {
-      this.props.history.push('/Categories')
+      this.props.history.push('/categories')
       }
     })
   }

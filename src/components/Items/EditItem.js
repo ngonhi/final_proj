@@ -24,7 +24,7 @@ class EditItem extends Component {
                 body: JSON.stringify(item)
             }
             this.props.fetchRequestObj("START_EDITING_ITEM", url, option, index)
-            this.props.history.push(`/Category/${cat_id}/Item/${item_id}`)
+            this.props.history.push(`/category/${cat_id}/item/${item_id}`)
         }
     }
 

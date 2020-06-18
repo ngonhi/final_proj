@@ -24,7 +24,7 @@ class AddItem extends Component {
                 body: JSON.stringify(item)
             }
             this.props.fetchRequestObj("START_ADDING_ITEM", url, option)
-            this.props.history.push(`/Category/${cat_id}`)
+            this.props.history.push(`/category/${cat_id}`)
         }
     }
 

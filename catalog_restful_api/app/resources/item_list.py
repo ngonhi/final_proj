@@ -54,7 +54,7 @@ class ItemList(Resource):
             raise NotFound()
         try:
             offset = int(request.args.get('offset'))
-            limit = ItemModel.count_rows(category_id)
+            limit = int(request.args.get('limit'))
             results = ItemModel.find_based_on_offset_and_limit(offset, limit, category_id)
         except Exception:
             raise InvalidUsage('Error occurred because of offset and limit parameters.', 500)

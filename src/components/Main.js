@@ -17,18 +17,11 @@ class Main extends Component {
     item_loading: true,
     cat_id: 0
   }
-  
-  componentDidMount() {
-    console.log('mount main')
-    const url = window.$domain + "/categories/?offset=0"
-    this.props.fetchRequestObj("START_LOADING_CATEGORIES", url)
-    .then(() => this.setState({loading: false}))
-  }
 
   componentDidUpdate() {
-    if (this.state.loading && Object.keys(this.props.categories).length !== 0) {
-      this.setState({loading: false})
-    }
+    // if (this.state.loading && Object.keys(this.props.categories).length !== 0) {
+    //   this.setState({loading: false})
+    // }
 
     if (this.state.item_loading && Object.keys(this.props.items).length !== 0) {
       this.setState({item_loading: false})
@@ -44,42 +37,45 @@ class Main extends Component {
     this.setState({item_loading: false})
   }
 
+  setLoading = () => {
+    this.setState({loading: false})
+  }
+
 
   render () {
-    console.log(this.props)
     return (
       <div>
         <h1> <Link to='/'> Categories Catalog </Link> </h1>
 
         <Route exact path='/' component={User}/>
         
-        <Route path='/Register' render={() => 
+        <Route path='/register' render={() => 
           <Register {...this.props}/>}/>
 
-        <Route path='/Login' render={() => 
+        <Route path='/login' render={() => 
           <Login {...this.props}/>}/>
 
-        <Route path='/Categories' render={() => (
-          <Categories loading={this.state.loading} {...this.props} /> 
+        <Route path='/categories' render={() => (
+          <Categories loading={this.state.loading} {...this.props} setLoading={this.setLoading} /> 
         )}/>
 
-        <Route path='/AddCategory' render = {() => (
+        <Route path='/addCategory' render = {() => (
           <AddCategory {...this.props}/>
         )}/>
 
-        <Route path='/Category/:cat_id/AddItem' render = {(params) => 
+        <Route path='/category/:cat_id/addItem' render = {(params) => 
               <AddItem {...this.props} {...params} cat_id={this.state.cat_id}/>}/> 
 
-        <Route path='/Category/:cat_id/EditItem/:item_id/:index' render = {(params) => 
+        <Route path='/category/:cat_id/editItem/:item_id/:index' render = {(params) => 
               <EditItem {...this.props} {...params} cat_id={this.state.cat_id}/>}/>         
 
-        <Route exact path='/Category/:id' render = {(params) =>
+        <Route exact path='/category/:id' render = {(params) =>
           <SingleCat loading={this.state.loading} {...this.props} {...params} 
                      item_loading={this.state.item_loading} setCatId={this.setCatId}
                      setLoadingItem={this.setLoadingItem}/>
         }/>
 
-        <Route path='/Category/:cat_id/Item/:item_id' render = {(params) =>
+        <Route path='/category/:cat_id/item/:item_id' render = {(params) =>
           <SingleItem item_loading={this.state.item_loading} {...this.props} {...params} setCatId={this.setCatId}/>
         }/>
       </div>

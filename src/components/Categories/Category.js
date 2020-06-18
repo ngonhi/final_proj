@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 function Category(props) {
     const cat = props.category
     return <div className='category'>
-         <Link to={`/Category/${cat.id}`}>  
+         <Link to={`/category/${cat.id}`}>  
         <h2> {cat.name} </h2>
         <p> {cat.description} </p> </Link>
     </div>
