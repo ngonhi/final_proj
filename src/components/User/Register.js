@@ -1,19 +1,15 @@
 import React, { Component } from 'react'
 
 class Register extends Component {
-  constructor() {
-    super()
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault()
 
+    const {username, name, email, password} = event.target.element
     const newUser = {
-        "username": event.target.elements.username.value,
-        "name": event.target.elements.name.value,
-        "email": event.target.elements.email.value,
-        "password": event.target.elements.password.value
+        "username": username.value,
+        "name": name.value,
+        "email": email.value,
+        "password": password.value
     }
 
     const url = window.$domain + '/registration'

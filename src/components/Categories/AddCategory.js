@@ -2,12 +2,7 @@ import React, {Component} from 'react'
 import Logout from '../User/Logout'
 
 class AddCategory extends Component {
-    constructor() {
-        super()
-        this.handleSubmit = this.handleSubmit.bind(this)
-    }
-
-    handleSubmit(event) {
+    handleSubmit = (event) => {
         event.preventDefault()
         const {name, des} = event.target.elements
         const category = {

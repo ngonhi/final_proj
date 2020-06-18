@@ -6,8 +6,8 @@ function Category(props) {
     const cat = props.category
     return <div className='category'>
          <Link to={`/Category/${cat.id}`}>  
-        <h2> {props.category.name} </h2>
-        <p> {props.category.description} </p> </Link>
+        <h2> {cat.name} </h2>
+        <p> {cat.description} </p> </Link>
     </div>
 }
 

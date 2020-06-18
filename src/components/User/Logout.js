@@ -4,12 +4,7 @@ import {Redirect} from 'react-router-dom'
 class Logout extends Component {
     state = {navigate: false}
 
-    constructor() {
-        super()
-        this.logout = this.logout.bind(this)
-    }
-
-    logout() {
+    logout = () => {
         localStorage.clear()
         this.setState({navigate: true})
     }

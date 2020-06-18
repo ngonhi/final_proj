@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
 
 class Login extends Component {
-  constructor() {
-    super()
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
-  // Handle submit event when user logs in
-  handleSubmit(event) {
+   handleSubmit = (event) => {
     event.preventDefault()
     const {username, password} = event.target.elements
     const user = {

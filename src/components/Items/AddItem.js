@@ -1,49 +1,42 @@
 import React, {Component} from 'react'
 import Logout from '../User/Logout'
 
-class EditItem extends Component {
-    constructor() {
-        super()
-        this.handleSubmit = this.handleSubmit.bind(this)
-    }
-
-    handleSubmit(event) {
+class AddItem extends Component {
+    handleSubmit = (event) => {
         event.preventDefault()
-        const name = event.target.elements.name.value
-        const description = event.target.elements.des.value
-        const price = event. target.elements.price.value
+        const {name, des, price} = event.target.elements
         const item = {
-                "name": name,
-                "description": description,
-                "price": price
+                "name": name.value,
+                "description": des.value,
+                "price": price.value
             };
  
         const cat_id = Number(this.props.match.params.cat_id)
-        const item_id = Number(this.props.match.params.item_id)
-        const index = Number(this.props.match.params.index)
-        if (name && description && price) {
-            const url = window.$domain + '/categories/' + cat_id + '/items/' + item_id
+
+        if (name && des && price) {
+            const url = window.$domain + '/categories/' + cat_id + '/items/'
             const option = {
-                method: 'PUT',
+                method: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + this.props.access_token,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(item)
             }
-            this.props.fetchRequestObj("START_EDITING_ITEM", url, option, index)
-            this.props.history.push(`/Category/${cat_id}/Item/${item_id}`)
+            this.props.fetchRequestObj("START_ADDING_ITEM", url, option)
+            this.props.history.push(`/Category/${cat_id}`)
         }
     }
 
     render() {
-        console.log(this.props)
+        const cat_id = Number(this.props.match.params.cat_id)
+        console.log(cat_id)
         if (this.props.access_token) {
             return (
             <div>
                 <Logout/>
                 <div className='form'>
-                    <p> Edit Item</p>
+                    <p> Add Item</p>
                     <form onSubmit={this.handleSubmit}> 
                         <input type='text' placeholder='Name' name='name'></input>
                         <input type='text' placeholder='Description' name='des'></input>
@@ -59,4 +52,4 @@ class EditItem extends Component {
     }
 }
 
-export default EditItem
+export default AddItem

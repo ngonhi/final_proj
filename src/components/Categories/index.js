@@ -7,8 +7,7 @@ import Logout from '../User/Logout'
 class Categories extends Component {
     render() {
         console.log('Categories')
-        const access_token = this.props.access_token
-        const categories = this.props.categories
+        const {access_token, categories} = this.props
         const categories_list = categories.categories
         
         if(!access_token) {

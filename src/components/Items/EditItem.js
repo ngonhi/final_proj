@@ -1,13 +1,8 @@
 import React, {Component} from 'react'
 import Logout from '../User/Logout'
 
-class AddItem extends Component {
-    constructor() {
-        super()
-        this.handleSubmit = this.handleSubmit.bind(this)
-    }
-
-    handleSubmit(event) {
+class EditItem extends Component {
+    handleSubmit = (event) => {
         event.preventDefault()
         const {name, des, price} = event.target.elements
         const item = {
@@ -16,32 +11,31 @@ class AddItem extends Component {
                 "price": price.value
             };
  
-        const cat_id = Number(this.props.match.params.cat_id)
+        const {cat_id, item_id, index} = this.props.match.params
 
         if (name && des && price) {
-            const url = window.$domain + '/categories/' + cat_id + '/items/'
+            const url = window.$domain + '/categories/' + cat_id + '/items/' + item_id
             const option = {
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     'Authorization': 'Bearer ' + this.props.access_token,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(item)
             }
-            this.props.fetchRequestObj("START_ADDING_ITEM", url, option)
-            this.props.history.push(`/Category/${cat_id}`)
+            this.props.fetchRequestObj("START_EDITING_ITEM", url, option, index)
+            this.props.history.push(`/Category/${cat_id}/Item/${item_id}`)
         }
     }
 
     render() {
-        const cat_id = Number(this.props.match.params.cat_id)
-        console.log(cat_id)
+        console.log(this.props)
         if (this.props.access_token) {
             return (
             <div>
                 <Logout/>
                 <div className='form'>
-                    <p> Add Item</p>
+                    <p> Edit Item</p>
                     <form onSubmit={this.handleSubmit}> 
                         <input type='text' placeholder='Name' name='name'></input>
                         <input type='text' placeholder='Description' name='des'></input>
@@ -57,4 +51,4 @@ class AddItem extends Component {
     }
 }
 
-export default AddItem
+export default EditItem

@@ -5,8 +5,7 @@ import Logout from '../User/Logout'
 
 class Items extends Component {
     render() {
-        const access_token = this.props.access_token
-        const items = this.props.items
+        const {access_token, items} = this.props
         const items_list = items.items
         
         if(!access_token) {

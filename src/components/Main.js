@@ -17,11 +17,6 @@ class Main extends Component {
     item_loading: true,
     cat_id: 0
   }
-
-  constructor() {
-    super()
-    this.setCatId = this.setCatId.bind(this)
-  }
   
   componentDidMount() {
     const url = window.$domain + "/categories/?offset=0"
@@ -39,7 +34,7 @@ class Main extends Component {
     }
   }
 
-  setCatId(id) {
+  setCatId = (id) => {
     this.setState({cat_id: id})
   }
 
