@@ -10,7 +10,9 @@ import rootReducer from './redux/reducers';
 import {loadFromLocalStorage, saveToLocalStorage} from './utils/localStorage'
 import {enhancer} from './middleware/middleware'
 
-window.$domain = 'http://localhost:5000'
+require('dotenv').config()
+
+window.$domain = process.env.REACT_APP_API_URL
 
 const persistedState = loadFromLocalStorage()
 const store = createStore(rootReducer, persistedState, enhancer);

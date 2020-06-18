@@ -8,7 +8,7 @@ import Logout from '../User/Logout'
 class Categories extends Component {
     state = {
         currentPage: 1,
-        catsPerPage: 2
+        catsPerPage: process.env.REACT_APP_OBJ_PER_PAGE
     }
 
     paginate = (pageNumber) =>  {

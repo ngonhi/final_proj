@@ -7,7 +7,7 @@ import Pagination from '../Pagination/index'
 class Items extends Component {
     state = {
         currentPage: 1,
-        itemsPerPage: 2
+        itemsPerPage: process.env.REACT_APP_OBJ_PER_PAGE
     }
 
     paginate = (pageNumber) =>  {

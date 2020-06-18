@@ -7,6 +7,8 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "env-cmd": "^10.1.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.5.0",
     "jsdom": "^16.2.2",
@@ -22,7 +24,9 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start'",
+    "start:local": "env-cmd -f ./.env/.env.local react-scripts start",
+    "start:dev": "env-cmd -f ./.env/.env.development react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "test:cov": "react-scripts test --env=jsdom --watch --coverage --watchAll=false",
