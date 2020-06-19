@@ -7,6 +7,7 @@ import SingleCat from './Categories/SingleCat'
 import User from './User/index'
 import Login from './User/Login'
 import Register from './User/Register'
+import SingleUser from './User/SingleUser'
 import SingleItem from './Items/SingleItem'
 import AddItem from './Items/AddItem'
 import EditItem from './Items/EditItem'
@@ -33,6 +34,9 @@ class Main extends Component {
 
         <Route path='/login' render={() => 
           <Login {...this.props}/>}/>
+
+        <Route path='/user' render={() => 
+          <SingleUser {...this.props}/>}/>
 
         <Route path='/categories' render={() => (
           <Categories {...this.props} /> 

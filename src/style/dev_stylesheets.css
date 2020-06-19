@@ -37,7 +37,12 @@ body {
     flex-wrap: wrap;
     justify-content: center;
   }
-  
+
+  .category a:hover, .item a:hover {
+    color: grey;
+  }
+
+
   .category, .item {
     width: calc(30%);
     margin-top: 2rem;
