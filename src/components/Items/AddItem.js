@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
 import Logout from '../User/Logout'
 
 class AddItem extends Component {
@@ -24,13 +25,36 @@ class AddItem extends Component {
                 body: JSON.stringify(item)
             }
             this.props.fetchRequestObj("START_ADDING_ITEM", url, option)
-            this.props.history.push(`/category/${cat_id}`)
+            .then(() => {
+                if(Object.keys(this.props.error).length !== 0) {
+                    this.props.history.push(`/category/${cat_id}/addItem`)
+                } else {
+                    this.props.history.push(`/category/${cat_id}`)
+                }
+            })
         }
     }
 
+    handleError = (error) => {
+        if (Object.keys(error).length !== 0) {
+          const {message, status, statusText} = error
+          let mess_list = JSON.stringify(message)
+          mess_list = mess_list.replace(/[\[\]{}]/g, '')
+          mess_list = mess_list.replace(/[",]/g, ' ')
+          error = <div className='error'> {status} - {statusText} - {mess_list} </div>
+        } else {
+          error = null
+        }
+    
+        return error
+    }
+
     render() {
+        console.log(this.props)
+        let error = this.props.error
+        if (error) { error = this.handleError(error) }
+
         const cat_id = Number(this.props.match.params.cat_id)
-        console.log(cat_id)
         if (this.props.access_token) {
             return (
             <div>
@@ -44,10 +68,16 @@ class AddItem extends Component {
                         <button> Insert </button>
                     </form>
                 </div>
-                
+                {error}
             </div>)
         } else {
-            return <div className='loader'> Access denied </div>
+            return (<div>
+                <div className='loader'> User has not been authorized to see this content. 
+                                        Please login again. </div>
+                <div className='button-container'>
+                    <Link to='/login' className='button'> Login </Link>
+                </div>
+            </div>)
         }
     }
 }

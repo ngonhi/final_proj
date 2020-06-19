@@ -38,6 +38,8 @@ function error(state = [], action) {
   switch (action.type) {
     case 'ERROR':
       return action.payload;
+    case 'CLEAR_ERROR':
+      return [];
     default:
       return state;
   }

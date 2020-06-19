@@ -17,38 +17,58 @@ class Categories extends Component {
     }
 
     loadCategories = (currentPage) => {
-        console.log('load cats')
         const catsPerPage = this.state.catsPerPage
         const startIndex = currentPage * catsPerPage - catsPerPage
         const url = `${window.$domain}/categories/?offset=${startIndex}&limit=${catsPerPage}`
-        console.log(currentPage)
-        console.log(url)
         this.props.fetchRequestObj("START_LOADING_CATEGORIES", url)
-        .then(() => this.props.setLoading())
     }
 
     componentDidMount() {
         this.loadCategories(this.state.currentPage)
     }
 
+    handleError = (error) => {
+        if (Object.keys(error).length !== 0) {
+          const {message, status, statusText} = error
+          error = <div className='error'> {status} - {statusText} - {message} </div>
+        } else {
+          error = null
+        }
+        return error
+    }
+
     render() {
-        console.log(this.state)
-        const {access_token, categories, loading} = this.props
-        
-        if(!access_token) {
-            return <div className='loader'> Access denied </div>
+        // Handle error
+        let error = this.props.error
+        if (error) { error = this.handleError(error) }
+        if (error) {
+            return <div> {error} </div>
         }
 
-        if (loading && Object.keys(categories).length === 0) {
+        const {access_token, categories} = this.props
+
+        // Handle no authentication
+        if(!access_token) {
+            return (<div>
+                <div className='loader'> User has not been authorized to see this content. 
+                                        Please login again. </div>
+                <div className='button-container'>
+                    <Link to='/login' className='button'> Login </Link>
+                </div>
+            </div>)
+        }
+
+        // Handle categories not loaded
+        if (Object.keys(categories).length === 0) {
             return <div className='loader'> ... loading </div>
-        } else {
+        } else { // Categories loaded
             const categories_list = categories.categories
             if (categories_list) {
                 return ( 
                     <div>
                         <Logout {...this.props}/>
                         <Link className='add-icon' to='/addCategory'></Link>
-                        <center><p> There are a total of {categories.total_catgories} categories</p></center>
+                        <center><p> There are a total of {categories.total_categories} categories</p></center>
                         <div className='cat-list'>
                             {categories_list.map((category, index) => 
                                 <Category category={category} key={index}/>)}

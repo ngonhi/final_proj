@@ -23,4 +23,10 @@ export function userLogout() {
   };
 }
 
+export function clearError() {
+  return {
+    type: 'CLEAR_ERROR',
+  };
+}
+
 

@@ -42,26 +42,48 @@ class SingleItem extends Component {
         }
     }
 
+    handleError = (error) => {
+        if (Object.keys(error).length !== 0) {
+          const {message, status, statusText} = error
+          error = <div className='error'> {status} - {statusText} - {message} </div>
+        } else {
+          error = null
+        }
+        return error
+    }
 
     render() {
-        if (!this.props.access_token) {
-            return <div className='loader'> Access denied </div>
+        // Handle error
+        let error = this.props.error
+        if (error) { error = this.handleError(error) }
+        if (error) {
+            return <div> {error} </div>
         }
 
-        if (this.props.item_loading === true) {
+        const {match, items, access_token, user} = this.props
+        const item_id = Number(match.params.item_id)
+        const cat_id = Number(match.params.cat_id) 
+        if (!access_token) {
+            return (<div>
+                <div className='loader'> User has not been authorized to see this content. 
+                                        Please login again. </div>
+                <div className='button-container'>
+                    <Link to='/login' className='button'> Login </Link>
+                </div>
+            </div>)
+        }
+
+        if (Object.keys(items).length === 0) {
             return <div className='loader'>
                 ...loading
             </div>
-        } else if (this.props.item_loading === false) {  
-            const {match, items} = this.props
-            const item_id = Number(match.params.item_id)
-            const cat_id = Number(match.params.cat_id)   
+        } else {    
             const items_list = items.items
             const item = items_list.find((item) => item.id === item_id)
             const index = items_list.findIndex((item) => item.id === item_id)
             if (item) {
                 const modifyButtons = this.modifyButtons(item, cat_id, item_id, index, 
-                      this.props.access_token, this.props.user)
+                      access_token, user)
                 return <div>
                     <Logout {...this.props}/>
                     <center>

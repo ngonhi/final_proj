@@ -13,8 +13,6 @@ import EditItem from './Items/EditItem'
 
 class Main extends Component {
   state = {
-    loading: true,
-    item_loading: true,
     cat_id: 0
   }
 
@@ -32,22 +30,13 @@ class Main extends Component {
     this.setState({cat_id: id})
   }
 
-
-  setLoadingItem = () => {
-    this.setState({item_loading: false})
-  }
-
-  setLoading = () => {
-    this.setState({loading: false})
-  }
-
-
   render () {
     return (
       <div>
         <h1> <Link to='/'> Categories Catalog </Link> </h1>
 
-        <Route exact path='/' component={User}/>
+        <Route exact path='/' render={() => (
+          <User {...this.props}/>)}/>
         
         <Route path='/register' render={() => 
           <Register {...this.props}/>}/>
@@ -56,7 +45,7 @@ class Main extends Component {
           <Login {...this.props}/>}/>
 
         <Route path='/categories' render={() => (
-          <Categories loading={this.state.loading} {...this.props} setLoading={this.setLoading} /> 
+          <Categories {...this.props} /> 
         )}/>
 
         <Route path='/addCategory' render = {() => (
@@ -70,13 +59,11 @@ class Main extends Component {
               <EditItem {...this.props} {...params} cat_id={this.state.cat_id}/>}/>         
 
         <Route exact path='/category/:id' render = {(params) =>
-          <SingleCat loading={this.state.loading} {...this.props} {...params} 
-                     item_loading={this.state.item_loading} setCatId={this.setCatId}
-                     setLoadingItem={this.setLoadingItem}/>
+          <SingleCat {...this.props} {...params} setCatId={this.setCatId}/>
         }/>
 
         <Route path='/category/:cat_id/item/:item_id' render = {(params) =>
-          <SingleItem item_loading={this.state.item_loading} {...this.props} {...params} setCatId={this.setCatId}/>
+          <SingleItem {...this.props} {...params} setCatId={this.setCatId}/>
         }/>
       </div>
     )

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 class Register extends Component {
   componentDidUpdate() {
-    if (Object.keys(this.props.user).length === 0) {
+    if (this.props.access_token && Object.keys(this.props.user).length === 0) {
     const url = window.$domain + '/me' 
       const option = {
         method: 'GET',
@@ -16,6 +16,7 @@ class Register extends Component {
   }
 
   handleSubmit = (event) => {
+    this.props.clearError()
     event.preventDefault()
     const {username, name, email, password} = event.target.elements
     const newUser = {
@@ -34,29 +35,31 @@ class Register extends Component {
       },
       body: JSON.stringify(newUser)
     }
-    console.log(url)
-    console.log(option)
     this.props.fetchRequestObj("START_LOADING_TOKEN", url, option)
     .then(() => {
       if(Object.keys(this.props.error).length !== 0) {
-        console.log(this.props.error)
-        this.props.history.push('/registration')
+        this.props.history.push('/register')
       } else {
       this.props.history.push('/categories')
       }
     })
   }
 
-  render() {
-    let error
-    if (this.props.error) {
-      if (Object.keys(this.props.error).length !== 0) {
-        const {message, status, statusText} = this.props.error
-        error = <div className='error'> {status} - {statusText} - {message} </div>
-      } else {
-        error = null
-      }
+  handleError = (error) => {
+    if (Object.keys(error).length !== 0) {
+      const {message, status, statusText} = error
+      const mess_list = Object.values(message)
+      error = <div className='error'> {status} - {statusText} - {mess_list.join(' ')} </div>
+    } else {
+      error = null
     }
+
+    return error
+  }
+
+  render() {
+    let error = this.props.error
+    if (error) { error = this.handleError(error) }
 
     return (
       <div>

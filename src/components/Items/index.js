@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import {Link} from 'react-router-dom'
 import Item from './Item'
 import Logout from '../User/Logout'
 import Pagination from '../Pagination/index'
@@ -20,28 +21,46 @@ class Items extends Component {
         const itemsPerPage = this.state.itemsPerPage
         const startIndex = currentPage * itemsPerPage - itemsPerPage
         const url = `${window.$domain}/categories/${cat_id}/items/?offset=${startIndex}&limit=${itemsPerPage}`
-        console.log(currentPage)
-        console.log(url)
         this.props.fetchRequestObj("START_LOADING_ITEMS", url)
-        .then(() => this.props.setLoadingItem())
     }
 
     componentDidMount() {
         this.loadItems(this.state.currentPage)
     }
 
+    handleError = (error) => {
+        if (Object.keys(error).length !== 0) {
+          const {message, status, statusText} = error
+          error = <div className='error'> {status} - {statusText} - {message} </div>
+        } else {
+          error = null
+        }
+        return error
+    }
+
     render() {
-        console.log(this.props)
-        console.log('Items')
-        const {access_token, items, item_loading} = this.props
+        // Handle error
+        let error = this.props.error
+        if (error) { error = this.handleError(error) }
+        if (error) {
+            return <div> {error} </div>
+        }
+        
+        const {access_token, items} = this.props
         
         if(!access_token) {
-            return <div className='loader'> Access denied </div>
+            return (<div>
+                <div className='loader'> User has not been authorized to see this content. 
+                                        Please login again. </div>
+                <div className='button-container'>
+                    <Link to='/login' className='button'> Login </Link>
+                </div>
+            </div>)
         }
 
-        if (item_loading) {
+        if (Object.keys(items).length === 0) {
             return <div className='loader'> ... loading </div>
-        } else if (!item_loading) {
+        } else {
             const items_list = items.items
             if (items_list) {
                 return ( 
