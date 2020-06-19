@@ -15,6 +15,7 @@ python run.py
 
 ### For frontend
 All dependencies should already be included in `package.json`
+Run `npm install` to install `node-modules`
 
 In the project directory, you can run:
 

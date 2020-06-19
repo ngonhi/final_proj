@@ -50,7 +50,6 @@ class AddItem extends Component {
     }
 
     render() {
-        console.log(this.props)
         let error = this.props.error
         if (error) { error = this.handleError(error) }
 

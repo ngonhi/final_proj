@@ -6,12 +6,12 @@ import NavBar from '../NavBar'
 
 class SingleCat extends Component {
     componentDidMount() {
+        console.log('mount cat')
         const cat_id = Number(this.props.match.params.id)
         this.props.setCatId(cat_id)
     }
 
     render() {
-        console.log(this.props)
         const {match, categories} = this.props
         const cat_id = Number(match.params.id)
 

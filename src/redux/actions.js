@@ -28,5 +28,3 @@ export function clearError() {
     type: 'CLEAR_ERROR',
   };
 }
-
-

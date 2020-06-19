@@ -4,11 +4,6 @@ import Item from './Item'
 import NavBar from '../NavBar'
 
 class SingleItem extends Component {
-    componentDidMount() {
-        const cat_id = Number(this.props.match.params.cat_id)
-        this.props.setCatId(cat_id)
-    }
-
     handleClick = (item, cat_id, item_id, index, token) => {
         const url = window.$domain + '/categories/' + cat_id + '/items/' + item_id
         const option = {
@@ -25,9 +20,6 @@ class SingleItem extends Component {
 
 
     modifyButtons = (item, cat_id, item_id, index, access_token, user) => {
-        console.log(user)
-        console.log(item)
-        let modifyButtons 
         if (user.id === item.user_id) {
             return <div className='button-container'>
                 <Link className='button' 

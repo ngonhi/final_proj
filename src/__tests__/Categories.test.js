@@ -35,12 +35,40 @@ const props = {
     description: 'Electronics Laptop', updated: null, id: 1, name: 'Laptop', created: null,
   },
   setCatId: jest.fn(),
+  loadCategories: jest.fn(),
+  access_token: '10',
 };
 
 describe('<Categories /> shallow rendering', () => {
+  const wrapper = shallow(<Categories {...props} />);
   it('should have proper snapshot', () => {
-    const wrapper = shallow(<Categories {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();
+  });
+  it('calls componentDidMount', () => {
+    const spy = jest.spyOn(Categories.prototype, 'componentDidMount');
+    wrapper.instance().componentDidMount();
+    expect(spy).toHaveBeenCalledTimes(1);
+    const url = `${window.$domain}/categories/?offset=NaN&limit=undefined`;
+    const type = 'START_LOADING_CATEGORIES';
+    expect(props.fetchRequestObj).toHaveBeenCalledWith(type, url);
+  });
+  it('contains pagination', () => {
+    expect(wrapper.find('Pagination')).toHaveLength(1);
+  });
+});
+
+describe('<Category /> shallow rendering', () => {
+  const wrapper = shallow(<Category {...props} />);
+  it('should have proper snapshot', () => {
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
+  it('should contain link', () => {
+    expect(wrapper.find('.category')).toHaveLength(1);
+  });
+  it('should contain class category', () => {
+    const cat_id = props.category.id;
+    console.log(cat_id);
+    expect(wrapper.find('Link').props().to).toBe(`/category/${cat_id}`);
   });
 });
 
@@ -51,16 +79,16 @@ describe('<AddCategory /> shallow rendering', () => {
   });
 });
 
-describe('<Category /> shallow rendering', () => {
+describe('<SingleCat /> shallow rendering', () => {
+  const wrapper = shallow(<SingleCat {...props} />);
   it('should have proper snapshot', () => {
-    const wrapper = shallow(<Category {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
-});
-
-describe('<SingleCat /> shallow rendering', () => {
-  it('should have proper snapshot', () => {
-    const wrapper = shallow(<SingleCat {...props} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+  it('should setCat after mounting', () => {
+    const spy = jest.spyOn(SingleCat.prototype, 'componentDidMount');
+    wrapper.instance().componentDidMount();
+    expect(spy).toHaveBeenCalledTimes(1);
+    console.log(wrapper.debug());
+    expect(props.setCatId).toHaveBeenCalledTimes(1);
   });
 });

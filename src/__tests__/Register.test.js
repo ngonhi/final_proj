@@ -9,6 +9,7 @@ configure({ adapter: new Adapter() });
 const props = {
   fetchRequestObj: jest.fn().mockResolvedValue({ payload: { result: {} } }),
   error: [],
+  clearError: jest.fn(),
 };
 
 describe('<Register /> rendering', () => {
@@ -28,7 +29,7 @@ describe('<Register /> rendering', () => {
       email: inputEle.at(2).instance().value,
       password: inputEle.at(3).instance().value,
     };
-    const url = `${window.$domain}/registration`;
+    const url = `${window.$domain}/registrations`;
     const option = {
       method: 'POST',
       headers: {

@@ -9,6 +9,7 @@ configure({ adapter: new Adapter() });
 const props = {
   fetchRequestObj: jest.fn().mockResolvedValue({ payload: { result: {} } }),
   error: [],
+  clearError: jest.fn(),
 };
 
 describe('<Login /> rendering', () => {

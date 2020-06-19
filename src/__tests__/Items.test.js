@@ -34,12 +34,30 @@ const props = {
   category: {
     description: 'Electronics Laptop', updated: null, id: 1, name: 'Laptop', created: null,
   },
+  item: {
+    category_id: 1,
+    created: null,
+    description: 'This is a really good laptop',
+    id: 1,
+    name: 'DellXPS',
+    price: 1500,
+    updated: null,
+    user_id: 1,
+  },
   setCatId: jest.fn(),
+  fetchRequestObj: jest.fn(),
 };
 
 describe('<Items /> shallow rendering', () => {
   it('should have proper snapshot', () => {
     const wrapper = shallow(<Items {...props} />);
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
+});
+
+describe('<Item /> shallow rendering', () => {
+  it('should have proper snapshot', () => {
+    const wrapper = shallow(<Item {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 });

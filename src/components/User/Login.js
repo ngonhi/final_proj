@@ -25,7 +25,6 @@ class Login extends Component {
     }
 
     const url = window.$domain + '/login'
-    console.log(url)
     const option = {
       method: 'POST',
       headers: {

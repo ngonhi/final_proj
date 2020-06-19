@@ -35,10 +35,6 @@ describe('<Main /> component', () => {
       }],
     },
   };
-  it('initial loading is false', () => {
-    const wrapper = shallow(<Main {...props} />);
-    expect(wrapper.state('loading')).toEqual(true);
-  });
   it('should have proper snapshot', () => {
     const wrapper = shallow(<Main {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();
@@ -62,7 +58,7 @@ describe('<Main /> component', () => {
   });
   it('/Register direct to Register', () => {
     const wrapper = mount(
-      <MemoryRouter initialEntries={['/Register']}>
+      <MemoryRouter initialEntries={['/register']}>
         <Main {...props} />
       </MemoryRouter>,
     );
@@ -71,7 +67,7 @@ describe('<Main /> component', () => {
   });
   it('/Login direct to Login', () => {
     const wrapper = mount(
-      <MemoryRouter initialEntries={['/Login']}>
+      <MemoryRouter initialEntries={['/login']}>
         <Main {...props} />
       </MemoryRouter>,
     );
@@ -80,7 +76,7 @@ describe('<Main /> component', () => {
   });
   it('/Categories direct to Categories', () => {
     const wrapper = mount(
-      <MemoryRouter initialEntries={['/Categories']}>
+      <MemoryRouter initialEntries={['/categories']}>
         <Main {...props} />
       </MemoryRouter>,
     );
@@ -89,7 +85,7 @@ describe('<Main /> component', () => {
   });
   it('/AddCategory direct to AddCategory', () => {
     const wrapper = mount(
-      <MemoryRouter initialEntries={['/AddCategory']}>
+      <MemoryRouter initialEntries={['/addCategory']}>
         <Main {...props} />
       </MemoryRouter>,
     );
@@ -98,22 +94,38 @@ describe('<Main /> component', () => {
   });
   it('/Category/:id direct to SingleCat', () => {
     const wrapper = mount(
-      <MemoryRouter initialEntries={['/Category/:id']}>
+      <MemoryRouter initialEntries={['/category/:id']}>
         <Main {...props} />
       </MemoryRouter>,
     );
     expect(wrapper.find('SingleCat')).toHaveLength(1);
     wrapper.unmount();
   });
-  it('calls componentDidMount', () => {
-    jest.spyOn(Main.prototype, 'componentDidMount');
-    const wrapper = shallow(<Main {...props} />);
-    expect(Main.prototype.componentDidMount.mock.calls.length).toBe(1);
-    expect(props.fetchRequestObj).toHaveBeenCalled();
+  it('route to EditItem', () => {
+    const wrapper = mount(
+      <MemoryRouter initialEntries={['/category/:cat_id/editItem/:item_id/:index']}>
+        <Main {...props} />
+      </MemoryRouter>,
+    );
+    expect(wrapper.find('EditItem')).toHaveLength(1);
+    wrapper.unmount();
   });
-  it('update state after mounting', async () => {
-    const wrapper = shallow(<Main {...props} />);
-    await props.fetchRequestObj();
-    expect(wrapper.state('loading')).toEqual(false);
+  it('route to AddItem', () => {
+    const wrapper = mount(
+      <MemoryRouter initialEntries={['/category/:cat_id/addItem']}>
+        <Main {...props} />
+      </MemoryRouter>,
+    );
+    expect(wrapper.find('AddItem')).toHaveLength(1);
+    wrapper.unmount();
+  });
+  it('route to SingleItem', () => {
+    const wrapper = mount(
+      <MemoryRouter initialEntries={['/category/:cat_id/item/:item_id']}>
+        <Main {...props} />
+      </MemoryRouter>,
+    );
+    expect(wrapper.find('SingleItem')).toHaveLength(1);
+    wrapper.unmount();
   });
 });

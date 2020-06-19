@@ -2,9 +2,11 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
 function User(props) {
+    if (props.error) {
     if (Object.keys(props.error).length !== 0) {
         props.clearError()
     }
+}
     
     return (
         <div className='button-container'>
