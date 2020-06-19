@@ -30,9 +30,6 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  color: grey;
-}
 
 .cat-list, .item-list {
   display: flex;
@@ -108,7 +105,7 @@ a:hover {
   text-align: center;
 }
 
-button, .button, .logout-button {
+button, .button {
   background-color:#065784;
   border: none;
   color: white;
@@ -120,7 +117,8 @@ button, .button, .logout-button {
   margin: 10px; 
 }
   
-button:hover, .button:hover, .logout-button:hover, button:focus, .button:focus  {
+button:hover, .button:hover, button:focus, .button:focus {
+  background: #7B8589;
   border-color: #7B8589;
   outline: 0;
 }
@@ -133,11 +131,6 @@ button:hover, .button:hover, .logout-button:hover, button:focus, .button:focus  
   padding:5px;
 }
 
-.logout-button {
-  position:absolute;
-  left: 1000px;
-  top: 10px;
-}
 
 .loader {
   height: 20%;
