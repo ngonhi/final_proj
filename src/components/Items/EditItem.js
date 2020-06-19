@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import Logout from '../User/Logout'
+import NavBar from '../NavBar'
 import Item from './Item'
 
 class EditItem extends Component {
@@ -63,7 +63,7 @@ class EditItem extends Component {
         if (access_token) {
             return (
             <div>
-                <Logout/>
+                <NavBar {...this.props}/>
                 <center><Item item={item} index={index}/></center>
                 <div className='form'>
                     <p> Edit Item</p>

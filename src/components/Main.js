@@ -16,16 +16,6 @@ class Main extends Component {
     cat_id: 0
   }
 
-  componentDidUpdate() {
-    // if (this.state.loading && Object.keys(this.props.categories).length !== 0) {
-    //   this.setState({loading: false})
-    // }
-
-    if (this.state.item_loading && Object.keys(this.props.items).length !== 0) {
-      this.setState({item_loading: false})
-    }
-  }
-
   setCatId = (id) => {
     this.setState({cat_id: id})
   }
@@ -33,7 +23,7 @@ class Main extends Component {
   render () {
     return (
       <div>
-        <h1> <Link to='/'> Categories Catalog </Link> </h1>
+        <h1> <Link to='/'> Multi-Categories Catalog </Link> </h1>
 
         <Route exact path='/' render={() => (
           <User {...this.props}/>)}/>

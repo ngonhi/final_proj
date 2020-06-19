@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import Category from './Category'
 import Items from '../Items/index'
-import Logout from '../User/Logout'
+import NavBar from '../NavBar'
 
 class SingleCat extends Component {
     componentDidMount() {
@@ -34,7 +34,7 @@ class SingleCat extends Component {
             const category = categories_list.find((cat) => cat.id === cat_id)
             if (category) {
                 return <div>
-                    <Logout {...this.props}/>
+                    <NavBar {...this.props}/>
                     <center>
                         <Category category={category}/>
                         <Link className='button' to={`/category/${cat_id}/addItem`}>Add Item</Link>

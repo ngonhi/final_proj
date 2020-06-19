@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import Logout from '../User/Logout'
+import NavBar from '../NavBar'
 
 class AddItem extends Component {
     handleSubmit = (event) => {
@@ -58,7 +58,7 @@ class AddItem extends Component {
         if (this.props.access_token) {
             return (
             <div>
-                <Logout {...this.props}/>
+                <NavBar {...this.props}/>
                 <div className='form'>
                     <p> Add Item</p>
                     <form onSubmit={this.handleSubmit}> 

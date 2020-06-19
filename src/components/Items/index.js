@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import Item from './Item'
-import Logout from '../User/Logout'
+import NavBar from '../NavBar'
 import Pagination from '../Pagination/index'
 
 class Items extends Component {
@@ -65,7 +65,6 @@ class Items extends Component {
             if (items_list) {
                 return ( 
                     <div>
-                        <Logout {...this.props}/>
                         <center><p> There are a total of {items.total_items} items</p></center>
                         <div className='item-list'>
                             {items_list.map((item, index) => 

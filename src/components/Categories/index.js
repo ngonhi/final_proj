@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import Category from './Category'
 import Pagination from '../Pagination/index'
-import Logout from '../User/Logout'
+import NavBar from '../NavBar'
 
 class Categories extends Component {
     state = {
@@ -66,7 +66,7 @@ class Categories extends Component {
             if (categories_list) {
                 return ( 
                     <div>
-                        <Logout {...this.props}/>
+                        <NavBar {...this.props}/>
                         <Link className='add-icon' to='/addCategory'></Link>
                         <center><p> There are a total of {categories.total_categories} categories</p></center>
                         <div className='cat-list'>

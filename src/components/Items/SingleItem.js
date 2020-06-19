@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import Item from './Item'
-import Logout from '../User/Logout'
+import NavBar from '../NavBar'
 
 class SingleItem extends Component {
     componentDidMount() {
@@ -85,7 +85,7 @@ class SingleItem extends Component {
                 const modifyButtons = this.modifyButtons(item, cat_id, item_id, index, 
                       access_token, user)
                 return <div>
-                    <Logout {...this.props}/>
+                    <NavBar {...this.props}/>
                     <center>
                         <h2> Item Detail </h2>
                         <Item item={item} index={index}/>
