@@ -20,18 +20,21 @@ class Items extends Component {
         const cat_id = Number(this.props.cat_id)
         const itemsPerPage = this.state.itemsPerPage
         const startIndex = currentPage * itemsPerPage - itemsPerPage
-        const url = `${window.$domain}/categories/${cat_id}/items/?offset=${startIndex}&limit=${itemsPerPage}`
+        const domain = process.env.REACT_APP_API_URL
+        const url = `${domain}/categories/${cat_id}/items/?offset=${startIndex}&limit=${itemsPerPage}`
         this.props.fetchRequestObj("START_LOADING_ITEMS", url)
     }
 
     componentDidMount() {
-        this.loadItems(this.state.currentPage)
+        if(this.props.accessToken) {
+            this.loadItems(this.state.currentPage)
+        }
     }
 
     handleError = (error) => {
         if (Object.keys(error).length !== 0) {
           const {message, status, statusText} = error
-          error = <div className='error'> {status} - {statusText} - {message} </div>
+          error = <div className='error'> {message} </div>
         } else {
           error = null
         }
@@ -46,11 +49,11 @@ class Items extends Component {
             return <div> {error} </div>
         }
         
-        const {access_token, items} = this.props
+        const {accessToken, items} = this.props
         
-        if(!access_token) {
+        if(!accessToken) {
             return (<div>
-                <div className='loader'> User has not been authorized to see this content. 
+                <div className='error'> User has not been authorized to see this content. 
                                         Please login again. </div>
                 <div className='button-container'>
                     <Link to='/login' className='button'> Login </Link>
@@ -71,7 +74,8 @@ class Items extends Component {
                                 <Item item={item} key={index} index={index}/>)}
                         </div>
                         <Pagination {...this.props} objsPerPage={this.state.itemsPerPage}
-                                    totalObjs={items.total_items} paginate={this.paginate}/>    
+                                    totalObjs={items.total_items} paginate={this.paginate}
+                                    activeIndex={this.state.currentPage}/>    
                     </div>)
             } else {
                 return <div className='loader'>No Items Found</div>

@@ -4,10 +4,18 @@ import {Link} from 'react-router-dom'
 
 function Category(props) {
     const cat = props.category
+    let description 
+    if (cat.description.length === 0) {
+        description = null
+    } else {
+        description = <p><b>Description:</b> {cat.description} </p>
+    }
+    
     return <div className='category'>
          <Link to={`/category/${cat.id}`}>  
-        <h2> {cat.name} </h2>
-        <p> {cat.description} </p> </Link>
+            <h2> {cat.name} </h2>
+            {description}
+        </Link>
     </div>
 }
 

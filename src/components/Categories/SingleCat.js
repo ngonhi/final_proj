@@ -3,10 +3,10 @@ import {Link} from 'react-router-dom'
 import Category from './Category'
 import Items from '../Items/index'
 import NavBar from '../NavBar'
+import User from '../User/index'
 
 class SingleCat extends Component {
     componentDidMount() {
-        console.log('mount cat')
         const cat_id = Number(this.props.match.params.id)
         this.props.setCatId(cat_id)
     }
@@ -15,12 +15,14 @@ class SingleCat extends Component {
         const {match, categories} = this.props
         const cat_id = Number(match.params.id)
 
-        if (!this.props.access_token) {
+        if (!this.props.accessToken) {
             return (<div>
-                <div className='loader'> User has not been authorized to see this content. 
+                <title> Category </title>
+                <div className='error'> User has not been authorized to see this content. 
                                         Please login again. </div>
                 <div className='button-container'>
                     <Link to='/login' className='button'> Login </Link>
+
                 </div>
             </div>)
         }
@@ -34,6 +36,7 @@ class SingleCat extends Component {
             const category = categories_list.find((cat) => cat.id === cat_id)
             if (category) {
                 return <div>
+                    <title> Category: {category.name} </title>
                     <NavBar {...this.props}/>
                     <center>
                         <Category category={category}/>

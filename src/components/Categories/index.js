@@ -4,11 +4,12 @@ import {Link} from 'react-router-dom'
 import Category from './Category'
 import Pagination from '../Pagination/index'
 import NavBar from '../NavBar'
+import User from '../User/index'
 
 class Categories extends Component {
     state = {
         currentPage: 1,
-        catsPerPage: process.env.REACT_APP_OBJ_PER_PAGE
+        catsPerPage: process.env.REACT_APP_OBJ_PER_PAGE,
     }
 
     paginate = (pageNumber) =>  {
@@ -19,18 +20,21 @@ class Categories extends Component {
     loadCategories = (currentPage) => {
         const catsPerPage = this.state.catsPerPage
         const startIndex = currentPage * catsPerPage - catsPerPage
-        const url = `${window.$domain}/categories/?offset=${startIndex}&limit=${catsPerPage}`
+        const domain = process.env.REACT_APP_API_URL
+        const url = `${domain}/categories/?offset=${startIndex}&limit=${catsPerPage}`
         this.props.fetchRequestObj("START_LOADING_CATEGORIES", url)
     }
 
     componentDidMount() {
-        this.loadCategories(this.state.currentPage)
+        if (this.props.accessToken) {
+            this.loadCategories(this.state.currentPage)
+        }
     }
 
     handleError = (error) => {
         if (Object.keys(error).length !== 0) {
-          const {message, status, statusText} = error
-          error = <div className='error'> {status} - {statusText} - {message} </div>
+          const message = error.message
+          error = <div className='error'> {message} </div>
         } else {
           error = null
         }
@@ -45,16 +49,18 @@ class Categories extends Component {
             return <div> {error} </div>
         }
 
-        const {access_token, categories} = this.props
+        const {accessToken, categories} = this.props
 
         // Handle no authentication
-        if(!access_token) {
+        if(!accessToken) {
             return (<div>
-                <div className='loader'> User has not been authorized to see this content. 
-                                        Please login again. </div>
-                <div className='button-container'>
+                <title> Categories </title>
+                <div className='error'> User has not been authorized to see this content. 
+                                        Please register or register login again. </div>
+                <User/>
+                {/* <div className='button-container'>
                     <Link to='/login' className='button'> Login </Link>
-                </div>
+                </div> */}
             </div>)
         }
 
@@ -66,6 +72,7 @@ class Categories extends Component {
             if (categories_list) {
                 return ( 
                     <div>
+                        <title> Categories </title>
                         <NavBar {...this.props}/>
                         <Link className='add-icon' to='/addCategory'></Link>
                         <center><p> There are a total of {categories.total_categories} categories</p></center>
@@ -74,7 +81,8 @@ class Categories extends Component {
                                 <Category category={category} key={index}/>)}
                         </div>
                         <Pagination {...this.props} objsPerPage={this.state.catsPerPage}
-                                    totalObjs={categories.total_categories} paginate={this.paginate}/>
+                                    totalObjs={categories.total_categories} paginate={this.paginate}
+                                    activeIndex={this.state.currentPage}/>
                         
                     </div>)
             } else {

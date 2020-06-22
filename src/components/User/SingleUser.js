@@ -5,11 +5,12 @@ function SingleUser(props) {
     const user = props.user
     return (
         <div>
+            <title> User </title>
             <NavBar {...props}/>
             <center>
-            <p>Name: {user.name}</p>
-            <p>Username: {user.username}</p>
-            <p>Email: {user.email}</p>
+            <p><b>Name:</b> {user.name}</p>
+            <p><b>Username:</b> {user.username}</p>
+            <p><b>Email:</b> {user.email}</p>
             </center>
         </div>
     )

@@ -36,7 +36,7 @@ const props = {
   },
   setCatId: jest.fn(),
   loadCategories: jest.fn(),
-  access_token: '10',
+  accessToken: '10',
 };
 
 describe('<Categories /> shallow rendering', () => {
@@ -48,7 +48,8 @@ describe('<Categories /> shallow rendering', () => {
     const spy = jest.spyOn(Categories.prototype, 'componentDidMount');
     wrapper.instance().componentDidMount();
     expect(spy).toHaveBeenCalledTimes(1);
-    const url = `${window.$domain}/categories/?offset=NaN&limit=undefined`;
+    const domain = process.env.REACT_APP_API_URL
+    const url = `${domain}/categories/?offset=NaN&limit=undefined`;
     const type = 'START_LOADING_CATEGORIES';
     expect(props.fetchRequestObj).toHaveBeenCalledWith(type, url);
   });
@@ -89,6 +90,6 @@ describe('<SingleCat /> shallow rendering', () => {
     wrapper.instance().componentDidMount();
     expect(spy).toHaveBeenCalledTimes(1);
     console.log(wrapper.debug());
-    expect(props.setCatId).toHaveBeenCalledTimes(1);
+    expect(props.setCatId).toHaveBeenCalled();
   });
 });

@@ -14,7 +14,9 @@ class Pagination extends Component {
             <center>
         <ul className='pagination'>
             {pageNumbers.map((number) => (
-            <li key={number}
+            <li 
+                className={this.props.activeIndex === number ? 'pagination-active' : ''}
+                key={number}
                 onClick={() => this.props.paginate(number)}>
                 {number}
             </li>

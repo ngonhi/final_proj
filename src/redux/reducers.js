@@ -14,7 +14,7 @@ function categories(state = {}, action) {
   }
 }
 
-function access_token(state = '', action) {
+function accessToken(state = '', action) {
   switch (action.type) {
     case 'START_LOADING_TOKEN_SUCCEEDED':
       return action.payload.access_token;
@@ -72,7 +72,7 @@ function items(state = {}, action) {
 }
 
 const appReducer = combineReducers({
-  categories, access_token, error, items, user,
+  categories, accessToken, error, items, user,
 });
 const rootReducer = (state, action) => {
   if (action.type === 'USER_LOGOUT') {

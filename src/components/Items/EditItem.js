@@ -4,9 +4,17 @@ import NavBar from '../NavBar'
 import Item from './Item'
 
 class EditItem extends Component {
+    state = {
+        submit: false
+    }
+
     handleSubmit = (cat_id, item_id, index, item, event) => {
-        this.props.clearError()
+        if (Object.keys(this.props.error).length !== 0) {
+            this.props.clearError()
+          }
         event.preventDefault()
+        
+        this.setState({submit: true})
         const {name, des, price} = event.target.elements
         const editItem = { // Prefill non entered section
             "name": name.value ? name.value : item.name,
@@ -15,21 +23,22 @@ class EditItem extends Component {
         };
 
         if (name && des && price) {
-            const url = window.$domain + '/categories/' + cat_id + '/items/' + item_id
+            const domain = process.env.REACT_APP_API_URL
+            const url = domain + '/categories/' + cat_id + '/items/' + item_id
             const option = {
                 method: 'PUT',
                 headers: {
-                    'Authorization': 'Bearer ' + this.props.access_token,
+                    'Authorization': 'Bearer ' +  this.props.accessToken,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(editItem)
             }
             this.props.fetchRequestObj("START_EDITING_ITEM", url, option, index)
             .then(() => {
-                if(Object.keys(this.props.error).length !== 0) {
-                    this.props.history.push(`/category/${cat_id}/editItem/${item_id}/${index}`)
-                } else {
+                if(Object.keys(this.props.error).length === 0) {
                     this.props.history.push(`/category/${cat_id}/item/${item_id}`)
+                } else {
+                    this.setState({submit: false})
                 }
             })
         }
@@ -41,7 +50,7 @@ class EditItem extends Component {
           let mess_list = JSON.stringify(message)
           mess_list = mess_list.replace(/[\[\]{}]/g, '')
           mess_list = mess_list.replace(/[",]/g, ' ')
-          error = <div className='error'> {status} - {statusText} - {mess_list} </div>
+          error = <div className='error'> {mess_list} </div>
         } else {
           error = null
         }
@@ -53,15 +62,16 @@ class EditItem extends Component {
         let error = this.props.error
         if (error) { error = this.handleError(error) }
         
-        const {match, items, access_token} = this.props
+        const {match, items, accessToken} = this.props
         const cat_id = Number(match.params.cat_id)
         const item_id = Number(match.params.item_id)
         const index = Number(match.params.index)
         const item = items.items.find((item) => item.id === item_id)
 
-        if (access_token) {
+        if (accessToken) {
             return (
             <div>
+                <title> Editting Item </title>
                 <NavBar {...this.props}/>
                 <center><Item item={item} index={index}/></center>
                 <div className='form'>
@@ -71,14 +81,14 @@ class EditItem extends Component {
                         <input type='text' placeholder='Name' name='name'></input>
                         <input type='text' placeholder='Description' name='des'></input>
                         <input type='text' placeholder='Price' name='price'></input>
-                        <button> Insert </button>
+                        <button disabled={this.state.submit}> Edit </button>
                     </form>
                 </div>
                 {error}
             </div>)
         } else {
             return (<div>
-                <div className='loader'> User has not been authorized to see this content. 
+                <div className='error'> User has not been authorized to see this content. 
                                         Please login again. </div>
                 <div className='button-container'>
                     <Link to='/login' className='button'> Login </Link>

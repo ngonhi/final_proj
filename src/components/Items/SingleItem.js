@@ -5,7 +5,8 @@ import NavBar from '../NavBar'
 
 class SingleItem extends Component {
     handleClick = (item, cat_id, item_id, index, token) => {
-        const url = window.$domain + '/categories/' + cat_id + '/items/' + item_id
+        const domain = process.env.REACT_APP_API_URL
+        const url = domain + '/categories/' + cat_id + '/items/' + item_id
         const option = {
             method: 'DELETE',
             headers: {
@@ -19,14 +20,14 @@ class SingleItem extends Component {
     }
 
 
-    modifyButtons = (item, cat_id, item_id, index, access_token, user) => {
+    modifyButtons = (item, cat_id, item_id, index, accessToken, user) => {
         if (user.id === item.user_id) {
             return <div className='button-container'>
                 <Link className='button' 
                     to={`/category/${cat_id}/editItem/${item_id}/${index}`}>
                     Edit Item</Link>
                 <button onClick = {() => 
-                    this.handleClick(item, cat_id, item_id, index, access_token)}> 
+                    this.handleClick(item, cat_id, item_id, index, accessToken)}> 
                     Remove Item </button> 
             </div>
         } else {
@@ -37,7 +38,7 @@ class SingleItem extends Component {
     handleError = (error) => {
         if (Object.keys(error).length !== 0) {
           const {message, status, statusText} = error
-          error = <div className='error'> {status} - {statusText} - {message} </div>
+          error = <div className='error'> {message} </div>
         } else {
           error = null
         }
@@ -52,12 +53,13 @@ class SingleItem extends Component {
             return <div> {error} </div>
         }
 
-        const {match, items, access_token, user} = this.props
+        const {match, items, accessToken, user} = this.props
         const item_id = Number(match.params.item_id)
         const cat_id = Number(match.params.cat_id) 
-        if (!access_token) {
+        if (!accessToken) {
             return (<div>
-                <div className='loader'> User has not been authorized to see this content. 
+                <title> Item </title>
+                <div className='error'> User has not been authorized to see this content. 
                                         Please login again. </div>
                 <div className='button-container'>
                     <Link to='/login' className='button'> Login </Link>
@@ -75,8 +77,9 @@ class SingleItem extends Component {
             const index = items_list.findIndex((item) => item.id === item_id)
             if (item) {
                 const modifyButtons = this.modifyButtons(item, cat_id, item_id, index, 
-                      access_token, user)
+                    accessToken, user)
                 return <div>
+                    <title> Item: {item.name} </title>
                     <NavBar {...this.props}/>
                     <center>
                         <h2> Item Detail </h2>

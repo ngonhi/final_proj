@@ -11,7 +11,6 @@ import {enhancer} from './middleware/middleware'
 
 require('dotenv').config()
 
-window.$domain = process.env.REACT_APP_API_URL
 if (process.env.REACT_APP_ENV === 'local') {
   require('./style/local_stylesheets.css')
 } else if (process.env.REACT_APP_ENV === 'development') {

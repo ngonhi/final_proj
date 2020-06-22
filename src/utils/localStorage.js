@@ -3,7 +3,7 @@ export const saveToLocalStorage = (state) => {
     const localState = JSON.stringify({
       categories: state.categories,
       items: state.items,
-      access_token: state.access_token,
+      accessToken: state.accessToken,
       user: state.user,
       error: [],
     });

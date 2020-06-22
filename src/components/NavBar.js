@@ -1,13 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import Logout from './User/Logout'
 
-function NavBar() {
+function NavBar(props) {
   return (
-    <div className="button-container">
-      <Link to="/user" className="button">User</Link>
-      <Link to="/categories" className="button"> Categories </Link>
-      <Link to="/" className="button"> Logout </Link>
-    </div>
+    <nav className="button-container">
+      <NavLink to="/user" className="button" activeClassName="selected-link">User</NavLink>
+      <NavLink to="/categories" className="button" activeClassName="selected-link"> Categories </NavLink>
+      <Logout {...props}/>
+    </nav>
   );
 }
 

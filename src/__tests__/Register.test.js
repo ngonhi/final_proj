@@ -29,7 +29,8 @@ describe('<Register /> rendering', () => {
       email: inputEle.at(2).instance().value,
       password: inputEle.at(3).instance().value,
     };
-    const url = `${window.$domain}/registrations`;
+    const domain = process.env.REACT_APP_API_URL
+    const url = `${domain}/registrations`;
     const option = {
       method: 'POST',
       headers: {

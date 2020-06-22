@@ -26,7 +26,8 @@ describe('<Login /> rendering', () => {
       password: inputEle.at(1).instance().value,
     };
 
-    const url = `${window.$domain}/login`;
+    const domain = process.env.REACT_APP_API_URL
+    const url = `${domain}/login`;
     const option = {
       method: 'POST',
       headers: {
