@@ -5,11 +5,41 @@ import NavBar from '../NavBar'
 class AddCategory extends Component {
     state = {
         name: '',
-        submit: false // State to prevent double submission
+        description: '',
+        submit: false, // State to prevent double submission
+        errors: {}
     }
 
     handleNameChange = (event) => {
         this.setState({name: event.target.value})
+    }
+
+    handleDescriptionChange = (event) => {
+        this.setState({description: event.target.value})
+    }
+
+    handleValidation = (event) => {
+        let formIsValid = true
+        const {name, description} = this.state
+        let errors = {}
+
+        if(!name){
+            formIsValid = false;
+            errors["name"] = "Name cannot be empty";
+        } else if(name.length < 5) {
+            formIsValid = false;
+            errors["name"] = "Name has to contain at least 5 characters"
+        } else if (name.length > 40) {
+            formIsValid = false;
+            errors["name"] = "Name can only contain at most 40 characters"
+        }
+
+        if (description.length > 200) {
+            formIsValid = false;
+            errors["description"] = "Description can only contain at most 200 characters"
+        }
+        
+        return {errors, formIsValid}
     }
 
     handleSubmit = (event) => {
@@ -49,7 +79,6 @@ class AddCategory extends Component {
 
     handleError = (error) => {
         if (Object.keys(error).length !== 0) {
-          //this.setState({submit: false})
           const {message, status, statusText} = error
           let mess_list = JSON.stringify(message)
           mess_list = mess_list.replace(/[\[\]{}]/g, '')
@@ -63,12 +92,14 @@ class AddCategory extends Component {
     }
 
     canBeSubmitted = () => {
-        return this.state.name.length > 0 && !this.state.submit;
+        const {errors, formIsValid}  = this.handleValidation()
+        const isEnabled = formIsValid && !this.state.submit
+        return {errors, isEnabled};
     }
 
     render() {
-        const isEnabled = this.canBeSubmitted()
-        console.log(this.state.submit)
+        const {errors, isEnabled} = this.canBeSubmitted()
+        console.log(errors)
         let error = this.props.error
         if (error) { error = this.handleError(error) }
 
@@ -87,10 +118,13 @@ class AddCategory extends Component {
                         <input 
                             type='text' 
                             placeholder='Description (optional)' 
-                            name='des'></input>
+                            name='des'
+                            onChange={this.handleDescriptionChange}></input>
                         <button disabled={!isEnabled} type="submit"> Insert </button>
                     </form>
                 </div>
+                <div className='error'> {errors.name} </div>
+                <div className='error'> {errors.description} </div>
                 {error}
             </div>)
         } else {
