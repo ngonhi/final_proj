@@ -66,7 +66,7 @@ class App extends Component {
         <Route path='/category/:cat_id/addItem' render = {(params) => 
           <AddItem {...this.props} {...params} cat_id={this.state.cat_id}/>}/> 
 
-        <Route path='/category/:cat_id/editItem/:item_id/:index' render = {(params) => 
+        <Route path='/category/:cat_id/editItem/:item_id' render = {(params) => 
           <EditItem {...this.props} {...params} cat_id={this.state.cat_id}/>}/>         
 
         <Route exact path='/category/:id' render = {(params) =>

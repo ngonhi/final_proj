@@ -1,13 +1,13 @@
-export const fetchRequestObj = (type, url, option = {}, index = 0) => ({
+export const fetchRequestObj = (type, url, option = {}, item_id = 0) => ({
   type,
   promise: fetch(url, option),
-  index,
+  item_id,
 });
 
-export const modifyState = (type, payload, index) => {
+export const modifyState = (type, payload, item_id) => {
   let newAction;
   if (type.includes('_SUCCEEDED')) {
-    newAction = { type, payload, index };
+    newAction = { type, payload, item_id };
   } else {
     const type = 'ERROR';
     newAction = { type, payload };

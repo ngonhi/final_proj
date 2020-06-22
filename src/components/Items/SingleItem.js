@@ -4,7 +4,7 @@ import Item from './Item'
 import NavBar from '../NavBar'
 
 class SingleItem extends Component {
-    handleClick = (item, cat_id, item_id, index, token) => {
+    handleClick = (item, cat_id, item_id, token) => {
         const domain = process.env.REACT_APP_API_URL
         const url = domain + '/categories/' + cat_id + '/items/' + item_id
         const option = {
@@ -15,19 +15,19 @@ class SingleItem extends Component {
             },
             body: JSON.stringify(item)
         }
-        this.props.fetchRequestObj("START_DELETING_ITEM", url, option, index) 
+        this.props.fetchRequestObj("START_DELETING_ITEM", url, option, item_id) 
         this.props.history.push(`/category/${cat_id}`)
     }
 
 
-    modifyButtons = (item, cat_id, item_id, index, accessToken, user) => {
+    modifyButtons = (item, cat_id, item_id, accessToken, user) => {
         if (user.id === item.user_id) {
             return <div className='button-container'>
                 <Link className='button' 
-                    to={`/category/${cat_id}/editItem/${item_id}/${index}`}>
+                    to={`/category/${cat_id}/editItem/${item_id}`}>
                     Edit Item</Link>
                 <button onClick = {() => 
-                    this.handleClick(item, cat_id, item_id, index, accessToken)}> 
+                    this.handleClick(item, cat_id, item_id, accessToken)}> 
                     Remove Item </button> 
             </div>
         } else {
@@ -58,7 +58,7 @@ class SingleItem extends Component {
         const cat_id = Number(match.params.cat_id) 
         if (!accessToken) {
             return (<div>
-                <title> Item </title>
+                <title> Category </title>
                 <div className='error'> User has not been authorized to see this content. 
                                         Please login again. </div>
                 <div className='button-container'>
@@ -74,16 +74,15 @@ class SingleItem extends Component {
         } else {    
             const items_list = items.items
             const item = items_list.find((item) => item.id === item_id)
-            const index = items_list.findIndex((item) => item.id === item_id)
             if (item) {
-                const modifyButtons = this.modifyButtons(item, cat_id, item_id, index, 
+                const modifyButtons = this.modifyButtons(item, cat_id, item_id, 
                     accessToken, user)
                 return <div>
-                    <title> Item: {item.name} </title>
+                    <title> Category: {item.name} </title>
                     <NavBar {...this.props}/>
                     <center>
                         <h2> Item Detail </h2>
-                        <Item item={item} index={index}/>
+                        <Item item={item}/>
                     </center>
                     {modifyButtons}
                     </div>

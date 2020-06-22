@@ -55,16 +55,17 @@ function items(state = {}, action) {
     case 'START_LOADING_ITEMS_SUCCEEDED':
       return action.payload;
     case 'START_EDITING_ITEM_SUCCEEDED':
+      const foundIndex = state.items.findIndex(x => x.id === action.payload.id)
       return {
         total_items: state.total_items + 1,
-        items: [...state.items.slice(0, action.index),
+        items: [...state.items.slice(0, foundIndex),
           action.payload,
-          ...state.items.slice(action.index + 1)],
+          ...state.items.slice(foundIndex + 1)],
       };
     case 'START_DELETING_ITEM_SUCCEEDED':
       return {
         total_items: state.total_items - 1,
-        items: [...state.items.slice(0, action.index), ...state.items.slice(action.index + 1)],
+        items: state.items.filter(item => item.id !== action.item_id),
       };
     default:
       return state;

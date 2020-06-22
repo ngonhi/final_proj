@@ -33,7 +33,7 @@ const middleware = (store) => (next) => async (action) => {
   const response = await action.promise;
   const { type, payload } = await handleResponse(response, action.type);
 
-  next(actions.modifyState(type, payload, action.index));
+  next(actions.modifyState(type, payload, action.item_id));
 };
 
 

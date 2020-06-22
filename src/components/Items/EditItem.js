@@ -8,7 +8,7 @@ class EditItem extends Component {
         submit: false
     }
 
-    handleSubmit = (cat_id, item_id, index, item, event) => {
+    handleSubmit = (cat_id, item_id, item, event) => {
         if (Object.keys(this.props.error).length !== 0) {
             this.props.clearError()
           }
@@ -33,7 +33,7 @@ class EditItem extends Component {
                 },
                 body: JSON.stringify(editItem)
             }
-            this.props.fetchRequestObj("START_EDITING_ITEM", url, option, index)
+            this.props.fetchRequestObj("START_EDITING_ITEM", url, option)
             .then(() => {
                 if(Object.keys(this.props.error).length === 0) {
                     this.props.history.push(`/category/${cat_id}/item/${item_id}`)
@@ -46,7 +46,7 @@ class EditItem extends Component {
 
     handleError = (error) => {
         if (Object.keys(error).length !== 0) {
-          const {message, status, statusText} = error
+          const message = error.message
           let mess_list = JSON.stringify(message)
           mess_list = mess_list.replace(/[\[\]{}]/g, '')
           mess_list = mess_list.replace(/[",]/g, ' ')
@@ -65,7 +65,6 @@ class EditItem extends Component {
         const {match, items, accessToken} = this.props
         const cat_id = Number(match.params.cat_id)
         const item_id = Number(match.params.item_id)
-        const index = Number(match.params.index)
         const item = items.items.find((item) => item.id === item_id)
 
         if (accessToken) {
@@ -73,11 +72,11 @@ class EditItem extends Component {
             <div>
                 <title> Editting Item </title>
                 <NavBar {...this.props}/>
-                <center><Item item={item} index={index}/></center>
+                <center><Item item={item}/></center>
                 <div className='form'>
                     <p> Edit Item</p>
                     <form onSubmit={(event) => 
-                            this.handleSubmit(cat_id, item_id, index, item, event)}> 
+                            this.handleSubmit(cat_id, item_id, item, event)}> 
                         <input type='text' placeholder='Name' name='name'></input>
                         <input type='text' placeholder='Description' name='des'></input>
                         <input type='text' placeholder='Price' name='price'></input>
