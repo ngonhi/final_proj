@@ -5,7 +5,48 @@ import Item from './Item'
 
 class EditItem extends Component {
     state = {
+        name: '',
+        description: '',
+        price: '',
         submit: false
+    }
+
+    handleNameChange = (event) => {
+        this.setState({name: event.target.value})
+    }
+
+    handleDescriptionChange = (event) => {
+        this.setState({description: event.target.value})
+    }
+
+    handlePriceChange = (event) => {
+        this.setState({price: event.target.value})
+    }
+
+    handleValidation = () => {
+        let formIsValid = true
+        const {name, description, price} = this.state
+        let errors = {}
+
+        if(name.length > 0 && name.length < 5) {
+            formIsValid = false;
+            errors["name"] = "Name has to contain at least 5 characters"
+        } else if (name.length > 40) {
+            formIsValid = false;
+            errors["name"] = "Name can only contain at most 40 characters"
+        }
+
+        if (description.length > 200) {
+            formIsValid = false;
+            errors["description"] = "Description can only contain at most 200 characters"
+        }
+
+        if (price < 0) {
+            formIsValid = false;
+            errors["price"] = "Price cannot be negative"
+        }
+        
+        return {errors, formIsValid}
     }
 
     handleSubmit = (cat_id, item_id, item, event) => {
@@ -58,7 +99,14 @@ class EditItem extends Component {
         return error
     }
 
+    canBeSubmitted = () => {
+        const {errors, formIsValid}  = this.handleValidation()
+        const isEnabled = formIsValid && !this.state.submit
+        return {errors, isEnabled};
+    }
+
     render() {
+        const {errors, isEnabled} = this.canBeSubmitted()
         let error = this.props.error
         if (error) { error = this.handleError(error) }
         
@@ -77,12 +125,27 @@ class EditItem extends Component {
                     <p> Edit Item</p>
                     <form onSubmit={(event) => 
                             this.handleSubmit(cat_id, item_id, item, event)}> 
-                        <input type='text' placeholder='Name' name='name'></input>
-                        <input type='text' placeholder='Description' name='des'></input>
-                        <input type='text' placeholder='Price' name='price'></input>
-                        <button disabled={this.state.submit}> Edit </button>
+                        <input 
+                            type='text' 
+                            placeholder='Name' 
+                            name='name'
+                            onChange={this.handleNameChange}></input>
+                        <input 
+                            type='text' 
+                            placeholder='Description' 
+                            name='des'
+                            onChange={this.handleDescriptionChange}></input>
+                        <input 
+                            type='text' 
+                            placeholder='Price' 
+                            name='price'
+                            onChange={this.handlePriceChange}></input>
+                        <button disabled={!isEnabled}> Edit </button>
                     </form>
                 </div>
+                <div className='error'> {errors.name} </div> <br/> <br/>
+                <div className='error'> {errors.price} </div> <br/> <br/>
+                <div className='error'> {errors.description} </div> 
                 {error}
             </div>)
         } else {

@@ -152,8 +152,7 @@ class AddItem extends Component {
                 </div>
                 <div className='error'> {errors.name} </div> <br/> <br/>
                 <div className='error'> {errors.price} </div> <br/> <br/>
-                <div className='error'> {errors.description} </div> 
-                
+                <div className='error'> {errors.description} </div>  
                 {error}
             </div>)
         } else {
