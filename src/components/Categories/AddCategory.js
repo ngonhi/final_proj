@@ -121,7 +121,7 @@ class AddCategory extends Component {
                         <button disabled={!isEnabled} type="submit"> Insert </button>
                     </form>
                 </div>
-                <div className='error'> {errors.name} </div>
+                <div className='error'> {errors.name} </div> <br/> <br/>
                 <div className='error'> {errors.description} </div>
                 {error}
             </div>)
