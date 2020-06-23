@@ -15,8 +15,44 @@ class AddItem extends Component {
         this.setState({name: event.target.value})
     }
 
+    handleDescriptionChange = (event) => {
+        this.setState({description: event.target.value})
+    }
+
     handlePriceChange = (event) => {
         this.setState({price: event.target.value})
+    }
+
+    handleValidation = () => {
+        let formIsValid = true
+        const {name, description, price} = this.state
+        let errors = {}
+
+        if(!name){
+            formIsValid = false;
+            errors["name"] = "Name cannot be empty";
+        } else if(name.length < 5) {
+            formIsValid = false;
+            errors["name"] = "Name has to contain at least 5 characters"
+        } else if (name.length > 40) {
+            formIsValid = false;
+            errors["name"] = "Name can only contain at most 40 characters"
+        }
+
+        if (description.length > 200) {
+            formIsValid = false;
+            errors["description"] = "Description can only contain at most 200 characters"
+        }
+
+        if (!price) {
+            formIsValid = false;
+            errors["price"] = "Price cannot be empty"
+        } else if (price < 0) {
+            formIsValid = false;
+            errors["price"] = "Price cannot be negative"
+        }
+        
+        return {errors, formIsValid}
     }
 
     handleSubmit = (event) => {
@@ -72,12 +108,13 @@ class AddItem extends Component {
     }
 
     canBeSubmitted = () => {
-        const {name, price} = this.state;
-        return name.length > 0 && price.length > 0 && !this.state.submit
+        const {errors, formIsValid}  = this.handleValidation()
+        const isEnabled = formIsValid && !this.state.submit
+        return {errors, isEnabled};
     }
 
     render() {
-        const isEnabled = this.canBeSubmitted()
+        const {errors, isEnabled} = this.canBeSubmitted()
         let error = this.props.error
         if (error) { error = this.handleError(error) }
 
@@ -103,7 +140,8 @@ class AddItem extends Component {
                         <input 
                             type='text' 
                             placeholder='Description (optional)' 
-                            name='des'></input>
+                            name='des'
+                            onChange={this.handleDescriptionChange}></input>
                         <input 
                             type='text'
                             placeholder='Price' 
@@ -112,6 +150,10 @@ class AddItem extends Component {
                         <button disabled={!isEnabled}> Insert </button>
                     </form>
                 </div>
+                <div className='error'> {errors.name} </div> <br/> <br/>
+                <div className='error'> {errors.price} </div> <br/> <br/>
+                <div className='error'> {errors.description} </div> 
+                
                 {error}
             </div>)
         } else {
