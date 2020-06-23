@@ -6,8 +6,7 @@ class AddCategory extends Component {
     state = {
         name: '',
         description: '',
-        submit: false, // State to prevent double submission
-        errors: {}
+        submit: false // State to prevent double submission
     }
 
     handleNameChange = (event) => {
@@ -18,7 +17,7 @@ class AddCategory extends Component {
         this.setState({description: event.target.value})
     }
 
-    handleValidation = (event) => {
+    handleValidation = () => {
         let formIsValid = true
         const {name, description} = this.state
         let errors = {}
@@ -99,7 +98,6 @@ class AddCategory extends Component {
 
     render() {
         const {errors, isEnabled} = this.canBeSubmitted()
-        console.log(errors)
         let error = this.props.error
         if (error) { error = this.handleError(error) }
 
